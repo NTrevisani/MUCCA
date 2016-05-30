@@ -9,7 +9,7 @@
 #include "TObjString.h"
 #include "TClass.h"
 
-#include "tmvaglob.C"
+#include "test/tmvaglob.C"
 
 // some global lists
 static TList*               TMVAGui_keyContent;
@@ -29,8 +29,11 @@ TList* GetKeyList( const TString& pattern )
 
 // utility function
 void ActionButton( TControlBar* cbar, 
-                   const TString& title, const TString& macro, const TString& comment, 
-                   const TString& buttonType, TString requiredKey = "") 
+                   const TString& title, 
+		   const TString& macro, 
+		   const TString& comment, 
+                   const TString& buttonType, 
+		   TString requiredKey = "") 
 {
    cbar->AddButton( title, macro, comment, buttonType );
 
@@ -49,14 +52,16 @@ void ActionButton( TControlBar* cbar,
 // main GUI
 void TMVAGui( const char* fName = "TMVA.root" ) 
 {   
+
    // Use this script in order to run the various individual macros
    // that plot the output of TMVA (e.g. running TMVAClassification.C),
    // stored in the file "TMVA.root"
 
    TString curMacroPath(gROOT->GetMacroPath());
    // uncomment next line for macros submitted to next root version
-   gROOT->SetMacroPath(curMacroPath+":./:$ROOTSYS/tmva/test/:");
-   
+   // gROOT->SetMacroPath(curMacroPath+":./:$ROOTSYS/tmva/test/:");
+   gROOT->SetMacroPath(curMacroPath+":test/:");
+
    // for the sourceforge version, including $ROOTSYS/tmva/test in the
    // macro path is a mistake, especially if "./" was not part of path
    // add ../macros to the path (comment out next line for the ROOT version of TMVA)

@@ -58,6 +58,7 @@
 
 using namespace TMVA;
 
+TString outputName = "";
 
 void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   // The explicit loading of the shared libTMVA is done in TMVAlogon.C, defined in .rootrc
@@ -74,6 +75,12 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   // (an example is given for using the BDT as plugin (see below),
   // but of course the real application is when you write your own
   // method based)
+  
+  //Put here the name you want for the output files
+  if (whichBkg == 1) outputName = "ggZH";
+  if (whichBkg == 2) outputName = "qqZH"; 
+  if (whichBkg == 3) outputName = "ZH"; 
+
   
   //---------------------------------------------------------------
   // This loads the library
@@ -120,7 +127,7 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   Use["FDA_MCMT"]        = 0;
   //
   // --- Neural Networks (all are feed-forward Multilayer Perceptrons)
-  Use["MLP"]             = 0; // Recommended ANN
+  Use["MLP"]             = 1; // Recommended ANN
   Use["MLPBFGS"]         = 0; // Recommended ANN with optional training method
   Use["MLPBNN"]          = 1; // Recommended ANN with BFGS training method and bayesian regulator
   Use["CFMlpANN"]        = 0; // Depreciated ANN from ALEPH
@@ -170,13 +177,13 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   // --- Here the preparation phase begins
   
   // Create a ROOT output file where TMVA will store ntuples, histograms, etc.
-  TString outfileName;
-  
+  TString outfileName = "";
+
   if (myMethodList != "") {
-    outfileName = "TMVA-" + std::to_string(whichBkg) + ".root";
+    outfileName = "TMVA-" + outputName + ".root";
   }
   else {
-    outfileName = "TMVA-" + std::to_string(whichBkg) + "-variables.root" ;
+    outfileName = "TMVA-" + outputName + "-variables.root" ;
   }
   
   TFile* outputFile = TFile::Open( outfileName, "RECREATE" );
@@ -212,14 +219,18 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   factory->AddVariable( "std_vector_lepton_pt[1]", 'F' );
   factory->AddVariable( "mll", 'F' );
   factory->AddVariable( "dphill", 'F' );
-  // factory->AddVariable( "yll", 'F' );
   factory->AddVariable( "ptll", 'F' );
+  factory->AddVariable( "ht", 'F' );
+  factory->AddVariable( "mth", 'F' );
   
   factory->AddVariable( "dphilmet1", 'F' );
   factory->AddVariable( "dphilmet2", 'F' );
   factory->AddVariable( "dphilmet",  'F' );  //---- minimum among the two
   
+  factory->AddVariable( "mpmet", 'F' );
   factory->AddVariable( "metPfType1", 'F' );
+  factory->AddVariable( "metTtrk", 'F' );
+
   //  factory->AddVariable( "mcoll", 'F' );
   
   // if (myMethodList != "") {
@@ -309,7 +320,6 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   //  if (whichBkg == 4) factory->SetBackgroundWeightExpression("baseW*(GEN_weight_SM/abs(GEN_weight_SM))");
   //  if (whichBkg == 5) factory->SetBackgroundWeightExpression("trigger*(fakeW2l0j*(njet==0)+fakeW2l1j*(njet==1)+fakeW2l2j*(njet>=2))");
   //  if (whichBkg == 5) factory->SetBackgroundWeightExpression("(fakeW2l0j*(njet==0)+fakeW2l1j*(njet==1)+fakeW2l2j*(njet>=2))");
-  
   
   // --- end of tree registration 
   
@@ -564,11 +574,11 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   outputFile->Close();
   
   std::string toDo;
-  toDo = "rm -r Weights-" + std::to_string(whichBkg) + "/";
+  toDo = "rm -r Weights-" + outputName + "/";
   std::cerr << "toDo = " << toDo << std::endl;
   system (toDo.c_str()); 
   
-  toDo = "mv weights Weights-" + std::to_string(whichBkg) + "/";
+  toDo = "mv weights Weights-" + outputName + "/";
   std::cerr << "toDo = " << toDo << std::endl;
   system (toDo.c_str()); 
   

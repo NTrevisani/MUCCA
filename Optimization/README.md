@@ -22,9 +22,9 @@ source of root, needed for the GUI later
 
 Train:
 
-    root -l -q Train.cxx\(1,\"BDT,BDTB,BDTD,BDTG,MLPBNN,SVM,KNN,LD,FDA_GA\"\)
-    root -l -q Train.cxx\(2,\"BDT,BDTB,BDTD,BDTG,MLPBNN,SVM,KNN,LD,FDA_GA\"\)
-    root -l -q Train.cxx\(3,\"BDT,BDTB,BDTD,BDTG,MLPBNN,SVM,KNN,LD,FDA_GA\"\)
+    root -l -q Train.cxx\(1,\"BDT,BDTB,BDTD,BDTG,MLPBNN,SVM,KNN,LD,FDA_GA,MLP\"\)
+    root -l -q Train.cxx\(2,\"BDT,BDTB,BDTD,BDTG,MLPBNN,SVM,KNN,LD,FDA_GA,MLP\"\)
+    root -l -q Train.cxx\(3,\"BDT,BDTB,BDTD,BDTG,MLPBNN,SVM,KNN,LD,FDA_GA,MLP\"\)
 
     root -l -q Train.cxx\(4,\"BDTG\"\)
     root -l -q Train.cxx\(5,\"BDTG\"\)
@@ -40,6 +40,10 @@ Train:
     root -l TrainMulti.cxx\(\"MLP\"\)
 
 Test:
+
+	python myScript.py TMVA-ggZH
+	python myScript.py TMVA-qqZH
+	python myScript.py TMVA-ZH
 
     root -l 'TMVAGui.C("TMVA-1.root")'
     root -l 'TMVAGui.C("TMVA-2.root")'
