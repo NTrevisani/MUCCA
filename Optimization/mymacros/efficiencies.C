@@ -197,6 +197,10 @@ void plot_efficiencies( TFile* file, Int_t type = 2, TDirectory* BinDir=0)
    }
    if (__SAVE_IMAGE__) TMVAGlob::imgconv( c, fname );
 
+   frame->GetYaxis()->SetRangeUser(0.96,1.0);
+   if (__SAVE_IMAGE__) TMVAGlob::imgconv( c, fname + "_zoom");
+
+
    return;
 }
 
