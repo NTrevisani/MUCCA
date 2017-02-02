@@ -22,9 +22,58 @@ source of root, needed for the GUI later
 
 Train:
 
+# All MVA Methods	
     root -l -q Train.cxx\(1,\"BDT,BDTB,BDTD,BDTG,MLPBNN,SVM,KNN,LD,FDA_GA,MLP\"\)
     root -l -q Train.cxx\(2,\"BDT,BDTB,BDTD,BDTG,MLPBNN,SVM,KNN,LD,FDA_GA,MLP\"\)
     root -l -q Train.cxx\(3,\"BDT,BDTB,BDTD,BDTG,MLPBNN,SVM,KNN,LD,FDA_GA,MLP\"\)
+    root -l -q Train.cxx\(4,\"BDT,BDTB,BDTD,BDTG,MLPBNN,SVM,KNN,LD,FDA_GA,MLP\"\)
+
+# Focus on BDT
+    root -l -q Train.cxx\(1,1,\"BDT4,BDTB,BDTG4\"\)
+    root -l -q Train.cxx\(2,1,\"BDT4,BDTB,BDTG4\"\)
+    root -l -q Train.cxx\(3,1,\"BDT4,BDTB,BDTG4\"\)
+    root -l -q Train.cxx\(4,1,\"BDT4,BDTB,BDTG4\"\)
+    root -l -q Train.cxx\(5,1,\"BDT4,BDTB,BDTG4\"\)
+    root -l -q Train.cxx\(6,1,\"BDT4,BDTB,BDTG4\"\)
+
+    root -l -q Train.cxx\(1,2,\"BDT4,BDTB,BDTG4\"\)
+    root -l -q Train.cxx\(2,2,\"BDT4,BDTB,BDTG4\"\)
+    root -l -q Train.cxx\(3,2,\"BDT4,BDTB,BDTG4\"\)
+    root -l -q Train.cxx\(4,2,\"BDT4,BDTB,BDTG4\"\)
+    root -l -q Train.cxx\(5,2,\"BDT4,BDTB,BDTG4\"\)
+    root -l -q Train.cxx\(6,2,\"BDT4,BDTB,BDTG4\"\)
+
+# Now use these:
+    root -l -q Train.cxx\(6,1,\"0\",\"BDTG4,BDT4\"\)
+    root -l -q Train.cxx\(6,1,\"1\",\"BDTG4,BDT4\"\)
+    root -l -q Train.cxx\(6,1,\"2\",\"BDTG4,BDT4\"\)
+    root -l -q Train.cxx\(6,1,\"3\",\"BDTG4,BDT4\"\)
+    root -l -q Train.cxx\(6,1,\"4\",\"BDTG4,BDT4\"\)
+    root -l -q Train.cxx\(6,1,\"5\",\"BDTG4,BDT4\"\)
+    python myScript.py TMVA-2HDM_TTbar_0var
+    python myScript.py TMVA-2HDM_TTbar_1var
+    python myScript.py TMVA-2HDM_TTbar_2var
+    python myScript.py TMVA-2HDM_TTbar_3var
+    python myScript.py TMVA-2HDM_TTbar_4var
+    python myScript.py TMVA-2HDM_TTbar_5var
+
+    root -l -q Train.cxx\(6,2,\"0\",\"BDTG4,BDT4\"\)
+    root -l -q Train.cxx\(6,2,\"1\",\"BDTG4,BDT4\"\)
+    root -l -q Train.cxx\(6,2,\"2\",\"BDTG4,BDT4\"\)
+    root -l -q Train.cxx\(6,2,\"3\",\"BDTG4,BDT4\"\)
+    root -l -q Train.cxx\(6,2,\"4\",\"BDTG4,BDT4\"\)
+    root -l -q Train.cxx\(6,2,\"5\",\"BDTG4,BDT4\"\)
+    python myScript.py TMVA-Zbar_TTbar_0var
+    python myScript.py TMVA-Zbar_TTbar_1var
+    python myScript.py TMVA-Zbar_TTbar_2var
+    python myScript.py TMVA-Zbar_TTbar_3var
+    python myScript.py TMVA-Zbar_TTbar_4var
+    python myScript.py TMVA-Zbar_TTbar_5var
+
+
+
+
+
 
     root -l -q Train.cxx\(4,\"BDTG\"\)
     root -l -q Train.cxx\(5,\"BDTG\"\)
@@ -44,6 +93,9 @@ Test:
 	python myScript.py TMVA-ggZH
 	python myScript.py TMVA-qqZH
 	python myScript.py TMVA-ZH
+	python myScript.py TMVA-Higgs
+	python myScript.py TMVA-WW
+	python myScript.py TMVA-TTbar
 
     root -l 'TMVAGui.C("TMVA-1.root")'
     root -l 'TMVAGui.C("TMVA-2.root")'

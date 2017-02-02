@@ -58,9 +58,10 @@
 
 using namespace TMVA;
 
-TString outputName = "";
+TString outputNameS = "";
+TString outputNameB = "";
 
-void Train( int whichBkg = 1,  TString myMethodList = "" ) {
+void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TString myMethodList = "" ) {
   // The explicit loading of the shared libTMVA is done in TMVAlogon.C, defined in .rootrc
   // if you use your private .rootrc, or run from a different directory, please copy the
   // corresponding lines from .rootrc
@@ -76,10 +77,17 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   // but of course the real application is when you write your own
   // method based)
   
+
   //Put here the name you want for the output files
-  if (whichBkg == 1) outputName = "ggZH";
-  if (whichBkg == 2) outputName = "qqZH"; 
-  if (whichBkg == 3) outputName = "ZH"; 
+  if (whichSig == 1) outputNameS = "2HDM";
+  if (whichSig == 2) outputNameS = "Zbar"; 
+
+  if (whichBkg == 1) outputNameB = "ggZH";
+  if (whichBkg == 2) outputNameB = "qqZH"; 
+  if (whichBkg == 3) outputNameB = "ZH"; 
+  if (whichBkg == 4) outputNameB = "Higgs"; 
+  if (whichBkg == 5) outputNameB = "WW"; 
+  if (whichBkg == 6) outputNameB = "TTbar"; 
 
   
   //---------------------------------------------------------------
@@ -138,10 +146,22 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   // 
   // --- Boosted Decision Trees
   Use["BDT"]             = 1; // uses Adaptive Boost
-  Use["BDTG"]            = 0; // uses Gradient Boost
-  Use["BDTB"]            = 0; // uses Bagging
-  Use["BDTD"]            = 0; // decorrelation + Adaptive Boost
-  Use["BDTF"]            = 0; // allow usage of fisher discriminant for node splitting 
+  Use["BDT2"]            = 1; // uses Adaptive Boost
+  Use["BDT3"]            = 1; // uses Adaptive Boost
+  Use["BDT4"]            = 1; // uses Adaptive Boost
+  Use["BDT5"]            = 1; // uses Adaptive Boost
+  Use["BDT6"]            = 1; // uses Adaptive Boost
+  Use["BDTG"]            = 1; // uses Gradient Boost
+  Use["BDTG2"]           = 1; // uses Gradient Boost
+  Use["BDTG3"]           = 1; // uses Gradient Boost
+  Use["BDTG4"]           = 1; // uses Gradient Boost
+  Use["BDTB"]            = 1; // uses Bagging
+  Use["BDTB2"]           = 1; // uses Bagging
+  Use["BDTB3"]           = 1; // uses Bagging
+  Use["BDTB4"]           = 1; // uses Bagging
+  Use["BDTB"]            = 1; // uses Bagging
+  Use["BDTD"]            = 1; // decorrelation + Adaptive Boost
+  Use["BDTF"]            = 1; // allow usage of fisher discriminant for node splitting 
   // 
   // --- Friedman's RuleFit method, ie, an optimised series of cuts ("rules")
   Use["RuleFit"]         = 1;
@@ -180,10 +200,10 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   TString outfileName = "";
 
   if (myMethodList != "") {
-    outfileName = "TMVA-" + outputName + ".root";
+    outfileName = "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var.root";
   }
   else {
-    outfileName = "TMVA-" + outputName + "-variables.root" ;
+    outfileName = "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var-variables.root" ;
   }
   
   TFile* outputFile = TFile::Open( outfileName, "RECREATE" );
@@ -215,24 +235,66 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   //  factory->AddVariable( "var3",                "Variable 3", "units", 'F' );
   //  factory->AddVariable( "var4",                "Variable 4", "units", 'F' );
   
-  factory->AddVariable( "std_vector_lepton_pt[0]", 'F' );
-  factory->AddVariable( "std_vector_lepton_pt[1]", 'F' );
-  factory->AddVariable( "mll", 'F' );
-  factory->AddVariable( "dphill", 'F' );
-  factory->AddVariable( "ptll", 'F' );
-  factory->AddVariable( "ht", 'F' );
-  factory->AddVariable( "mth", 'F' );
-  
-  factory->AddVariable( "dphilmet1", 'F' );
-  factory->AddVariable( "dphilmet2", 'F' );
-  factory->AddVariable( "dphilmet",  'F' );  //---- minimum among the two
-  
-  factory->AddVariable( "mpmet", 'F' );
-  factory->AddVariable( "metPfType1", 'F' );
-  factory->AddVariable( "metTtrk", 'F' );
+
+  //Variables ordered by power for BDTG4 - 2HDM
+
+  if (whichSig == 1) {
+    if (nVariables == "0" || nVariables == "1" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+      factory->AddVariable( "mth",        'F' );
+    if (nVariables == "0" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+      factory->AddVariable( "mtw2", 'F' );
+    if (nVariables == "0" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+      factory->AddVariable( "metTtrk",    'F' );
+    if (nVariables == "0" || nVariables == "4" || nVariables == "5")
+      factory->AddVariable( "drll",   'F' );
+    if (nVariables == "0" || nVariables == "5")
+      factory->AddVariable( "mll",  'F' );
+    if (nVariables == "0"){
+      factory->AddVariable( "mpmet",      'F' );
+      factory->AddVariable( "mtw1", 'F' );
+      factory->AddVariable( "ptll", 'F' );
+      factory->AddVariable( "dphilmet",  'F' ); // ---- minimum among the two
+      factory->AddVariable( "dphilmet1", 'F' );
+      factory->AddVariable( "dphilmet2", 'F' );
+      factory->AddVariable( "std_vector_lepton_pt[0]", 'F' );
+      factory->AddVariable( "metPfType1", 'F' );
+      factory->AddVariable( "dphill", 'F' );
+      factory->AddVariable( "std_vector_lepton_pt[1]", 'F' );
+    }
+  }
+
+  //Variables ordered by power for BDTG4 - Z' baryonic
+
+  if (whichSig == 2) {
+    if (nVariables == "0" || nVariables == "1" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+      factory->AddVariable( "mth",        'F' );
+    if (nVariables == "0" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+      factory->AddVariable( "metTtrk",    'F' );
+    if (nVariables == "0" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+      factory->AddVariable( "mtw2", 'F' );
+    if (nVariables == "0" || nVariables == "4" || nVariables == "5")
+      factory->AddVariable( "drll",   'F' );
+    if (nVariables == "0" || nVariables == "5")
+      factory->AddVariable( "mll",  'F' );
+    if (nVariables == "0"){
+      factory->AddVariable( "mpmet",      'F' );
+      factory->AddVariable( "mtw1", 'F' );
+      factory->AddVariable( "ptll", 'F' );
+      factory->AddVariable( "dphilmet",  'F' ); // ---- minimum among the two
+      factory->AddVariable( "dphilmet1", 'F' );
+      factory->AddVariable( "dphilmet2", 'F' );
+      factory->AddVariable( "std_vector_lepton_pt[0]", 'F' );
+      factory->AddVariable( "metPfType1", 'F' );
+      factory->AddVariable( "dphill", 'F' );
+      factory->AddVariable( "std_vector_lepton_pt[1]", 'F' );
+    }
+  }
+  //  factory->AddVariable( "metPuppi", 'F' );
 
   //  factory->AddVariable( "mcoll", 'F' );
   
+
+
   // if (myMethodList != "") {
   //  factory->AddSpectator( "mth",  'F' );  //---- used in shape analysis, not here
   // }
@@ -260,42 +322,46 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   
   // Signal
   
-  fname = Form ("eos/user/r/rebeca/HWW2015/03Mar_25ns_mAODv2_MC/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_monoH_2HDM_MZp-600_MA0-400.root");
+  // 2HDM
+  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_monoH_2HDM_MZp-600_MA0-300.root");
   TFile *inputS1 = TFile::Open( fname );
   TTree *signal1 = (TTree*) inputS1->Get("latino");
   
+  // Z' Baryonic
+  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_monoH_ZpBaryonic_MZp-500_MChi-1.root");
+  TFile *inputS2 = TFile::Open( fname );
+  TTree *signal2 = (TTree*) inputS2->Get("latino");
+  
   //  Backgrounds
   
-  fname = Form ("eos/user/r/rebeca/HWW2015/22Jan_25ns_mAODv2_MC/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_ggZH_HToWW_M125.root");
+  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
   TFile *inputB1 = TFile::Open( fname );
   TTree *background1 = (TTree*) inputB1->Get("latino");
-  
-  fname = Form ("eos/user/r/rebeca/HWW2015/22Jan_25ns_mAODv2_MC/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_HZJ_HToWW_M125.root");
+
+  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
   TFile *inputB2 = TFile::Open( fname );
   TTree *background2 = (TTree*) inputB2->Get("latino");
 
-  fname = Form ("eos/user/r/rebeca/HWW2015/22Jan_25ns_mAODv2_MC/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_ggZH_HToWW_M125.root");
-  TChain *background3 = new TChain("latino");
-  background3->Add(fname);
-  fname = Form ("eos/user/r/rebeca/HWW2015/22Jan_25ns_mAODv2_MC/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_HZJ_HToWW_M125.root");
-  background3->Add(fname);
+  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
+  TFile *inputB3 = TFile::Open( fname );
+  TTree *background3 = (TTree*) inputB3->Get("latino");
+    
+  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_WWTo2L2Nu.root");
+  TFile *inputB4 = TFile::Open( fname );
+  TTree *background4 = (TTree*) inputB4->Get("latino");
   
-  // fname = Form ("eos/user/r/rebeca/HWW2015/22Jan_25ns_mAODv2_MC/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_TTTo2L2Nu.root");
-  // //  fname = Form ("/media/data/amassiro/LatinoTrees/25ns/21Oct2015/mcwghtcount__MC__l2sel/latino_TTJets.root");
-  // //  fname = Form ("/media/data/amassiro/LatinoTrees/25ns/21Oct2015/mcwghtcount__MC__l2sel__hadd__l2sel/latino_TTTo2L2Nu.root");
-  // TFile *inputB3 = TFile::Open( fname );
-  // TTree *background3 = (TTree*) inputB3->Get("latino");
- 
-  // fname = Form ("eos/user/r/rebeca/HWW2015/22Jan_25ns_mAODv2_MC/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_Wg_AMCNLOFXFX.root");
-  // //  fname = Form ("/media/data/amassiro/LatinoTrees/25ns/21Oct2015/mcwghtcount__MC__l2sel__hadd__l2sel/latino_WZTo3LNu.root");
-  // TFile *inputB4 = TFile::Open( fname );
-  // TTree *background4 = (TTree*) inputB4->Get("latino");
-  
-  // fname = Form ("eos/user/a/amassiro/HWW2015/04MarchFake/22Jan_Run2015D_16Dec2015/latino_DD_Run2015D_16Dec2015_MuonEG.root");
-  // TFile *inputB5 = TFile::Open( fname );
-  // TTree *background5 = (TTree*) inputB5->Get("latino");
-  
-  
+  TChain *background5 = new TChain("latino");
+  background5->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_TTTo2L2Nu_ext1__part0.root");
+  background5->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_TTTo2L2Nu_ext1__part1.root");
+  background5->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_TTTo2L2Nu_ext1__part2.root");
+  background5->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_TTTo2L2Nu_ext1__part3.root");
+  background5->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_TTTo2L2Nu_ext1__part4.root");
+  background5->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_TTTo2L2Nu_ext1__part5.root");
+  background5->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_TTTo2L2Nu_ext1__part6.root");
+  background5->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_TTTo2L2Nu_ext1__part7.root");
+  background5->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_TTTo2L2Nu_ext1__part8.root");
+  background5->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight/latino_TTTo2L2Nu_ext1__part9.root");
+
   // --- Register the training and test trees
   
   // global event weights per tree (see below for setting event-wise weights)
@@ -303,20 +369,32 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   Double_t backgroundWeight = 1.0;
   
   // You can add an arbitrary number of signal or background trees
-  factory->AddSignalTree(    signal1, signalWeight );
+  if (whichSig == 1)
+    factory->AddSignalTree(signal1, signalWeight );
+  if (whichSig == 2)
+    factory->AddSignalTree(signal2, signalWeight );
   
-  if (whichBkg == 1)  factory->AddBackgroundTree( background1, backgroundWeight );
-  if (whichBkg == 2)  factory->AddBackgroundTree( background2, backgroundWeight );
-  if (whichBkg == 3)  factory->AddBackgroundTree( background3, backgroundWeight );
-  // if (whichBkg == 4)  factory->AddBackgroundTree( background4, backgroundWeight );
-  // if (whichBkg == 5)  factory->AddBackgroundTree( background5, backgroundWeight );
+  if (whichBkg == 1 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
+    factory->AddBackgroundTree( background1, backgroundWeight );
+  if (whichBkg == 2 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
+    factory->AddBackgroundTree( background2, backgroundWeight );
+  if (whichBkg == 4 || whichBkg == 5 || whichBkg == 6)  
+    factory->AddBackgroundTree( background3, backgroundWeight );
+  if (whichBkg == 5 || whichBkg == 6)  
+    factory->AddBackgroundTree( background4, backgroundWeight );
+  if (whichBkg == 6)  
+    factory->AddBackgroundTree( background5, backgroundWeight );
   
   //---- global weight
   factory->SetSignalWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
   
   if (whichBkg == 1) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  if (whichBkg == 2) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]*GEN_weight_SM/abs(GEN_weight_SM)");
-  if (whichBkg == 3) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]*GEN_weight_SM/abs(GEN_weight_SM)");
+  if (whichBkg == 2) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  if (whichBkg == 3) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  if (whichBkg == 4) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  if (whichBkg == 5) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  if (whichBkg == 6) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+
   //  if (whichBkg == 4) factory->SetBackgroundWeightExpression("baseW*(GEN_weight_SM/abs(GEN_weight_SM))");
   //  if (whichBkg == 5) factory->SetBackgroundWeightExpression("trigger*(fakeW2l0j*(njet==0)+fakeW2l1j*(njet==1)+fakeW2l2j*(njet>=2))");
   //  if (whichBkg == 5) factory->SetBackgroundWeightExpression("(fakeW2l0j*(njet==0)+fakeW2l1j*(njet==1)+fakeW2l2j*(njet>=2))");
@@ -332,14 +410,18 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   //  TCut mycuts = "ch1*ch2<0 && pt2>20 && mpmet>20 && pfmet>20 && mll>12 && nextra==0"; // for example: TCut mycuts = "abs(var1)<0.5 && abs(var2-0.5)<1";
   //  TCut mycutb = "ch1*ch2<0 && pt2>20 && mpmet>20 && pfmet>20 && mll>12 && nextra==0"; // for example: TCut mycutb = "abs(var1)<0.5";
   
-  TCut mycuts = "std_vector_lepton_pt[0]>20 && std_vector_lepton_pt[1]>20 \
+  TCut mycuts = "std_vector_lepton_pt[0]>25 && std_vector_lepton_pt[1]>20 \
             && std_vector_lepton_pt[2]<10 \
-            && (std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*13) \
+            && njet >= 0 \
             && mll>12 \
             && metPfType1 > 20 \
             && mpmet > 20 \
             && ptll > 30 \
-            && njet >= 0 \
+            && mll < 100 \
+            && drll < 2.5 \
+            && mth > 40 \
+            && ( std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] < 0) \
+            && ((std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*13) || (abs(mll - 91) > 15) && ptll>45 && mpmet>45 ) \
             && ( std_vector_jet_pt[0] < 20 || std_vector_jet_cmvav2[0] < -0.715 ) \
             && ( std_vector_jet_pt[1] < 20 || std_vector_jet_cmvav2[1] < -0.715 ) \
             && ( std_vector_jet_pt[2] < 20 || std_vector_jet_cmvav2[2] < -0.715 ) \
@@ -349,9 +431,14 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
             && ( std_vector_jet_pt[6] < 20 || std_vector_jet_cmvav2[6] < -0.715 ) \
             && ( std_vector_jet_pt[7] < 20 || std_vector_jet_cmvav2[7] < -0.715 ) \
             && ( std_vector_jet_pt[8] < 20 || std_vector_jet_cmvav2[8] < -0.715 ) \
-            && ( std_vector_jet_pt[9] < 20 || std_vector_jet_cmvav2[9] < -0.715 )"; 
-  
-  
+            && ( std_vector_jet_pt[9] < 20 || std_vector_jet_cmvav2[9] < -0.715 )";
+
+  //&& (std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*13) \
+  //&& mll < 100							\
+  //&& mth > 200							\
+  //&& drll < 2.0							\
+  //&& mth > 60						\
+
   TCut mycutb = mycuts;
   
   
@@ -364,8 +451,9 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   //    factory->PrepareTrainingAndTestTree( mycut,
   //                                         "NSigTrain=3000:NBkgTrain=3000:NSigTest=3000:NBkgTest=3000:SplitMode=Random:!V" );
   //  factory->PrepareTrainingAndTestTree( mycuts, mycutb,  "nTrain_Signal=0:nTrain_Background=0:SplitMode=Random:NormMode=NumEvents:!V" );
-  factory->PrepareTrainingAndTestTree( mycuts, mycutb, "SplitMode=Random:NormMode=NumEvents:!V");
-  
+  factory->PrepareTrainingAndTestTree( mycuts, mycuts, "SplitMode=Random:NormMode=NumEvents:!V");
+  //  factory->PrepareTrainingAndTestTree(mycuts,"nTrain_Signal=4000:nTrain_Background=4000:nTest_Signal=4000:nTest_Background=4000:SplitMode=Random::NormMode=NumEvents:!V");
+
   // ---- Book MVA methods
   // Please lookup the various method configuration options in the corresponding cxx files, eg:
   // src/MethoCuts.cxx, etc, or here: http://tmva.sourceforge.net/optionRef.html
@@ -519,16 +607,59 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   // Boosted Decision Trees
   if (Use["BDTG"]) // Gradient Boost
     factory->BookMethod( TMVA::Types::kBDT, "BDTG",
-			 "!H:!V:NTrees=1000:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.10:UseBaggedGrad:GradBaggingFraction=0.5:nCuts=20:MaxDepth=5" );
-  //                        "!H:!V:NTrees=1000:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.10:UseBaggedGrad:GradBaggingFraction=0.5:nCuts=20:MaxDepth=2" );
+			 "!H:!V:NTrees=1000:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=20:MaxDepth=2" );
+
+  if (Use["BDTG2"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG2",
+			 "!H:!V:NTrees=2000:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=20:MaxDepth=2" );
+
+  if (Use["BDTG3"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG3",
+			 "!H:!V:NTrees=1000:MinNodeSize=5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=20:MaxDepth=2" );  
+
+  if (Use["BDTG4"]) // Gradient Boost - Reference
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG4",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=100:MaxDepth=2" );
   
   if (Use["BDT"])  // Adaptive Boost
     factory->BookMethod( TMVA::Types::kBDT, "BDT",
-			 "!H:!V:NTrees=850:MinNodeSize=2.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.5:SeparationType=GiniIndex:nCuts=20" );
+			 "!H:!V:NTrees=1200:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=20" );
+  
+  if (Use["BDT2"])  // Adaptive Boost - Reference
+    factory->BookMethod( TMVA::Types::kBDT, "BDT2",
+			 "!H:!V:NTrees=1600:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=20" );
+  
+  if (Use["BDT3"])  // Adaptive Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDT3",
+			 "!H:!V:NTrees=850:MinNodeSize=1.0%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=20" );
+  
+  if (Use["BDT4"])  // Adaptive Boost - Reference
+    factory->BookMethod( TMVA::Types::kBDT, "BDT4",
+			 "!H:!V:NTrees=850:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=100" );
+  
+  if (Use["BDT5"])  // Adaptive Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDT5",
+			 "!H:!V:NTrees=850:MinNodeSize=0.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=20" );
+  
+  if (Use["BDT6"])  // Adaptive Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDT6",
+			 "!H:!V:NTrees=850:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.2:SeparationType=GiniIndex:nCuts=20" );
   
   if (Use["BDTB"]) // Bagging
     factory->BookMethod( TMVA::Types::kBDT, "BDTB",
 			 "!H:!V:NTrees=400:BoostType=Bagging:SeparationType=GiniIndex:nCuts=20" );
+  
+  if (Use["BDTB2"]) // Bagging
+    factory->BookMethod( TMVA::Types::kBDT, "BDTB2",
+			 "!H:!V:NTrees=400:BoostType=Bagging:SeparationType=GiniIndex:nCuts=10" );
+  
+  if (Use["BDTB3"]) // Bagging
+    factory->BookMethod( TMVA::Types::kBDT, "BDTB3",
+			 "!H:!V:NTrees=400:BoostType=Bagging:SeparationType=GiniIndex:nCuts=30" );
+  
+  if (Use["BDTB4"]) // Bagging
+    factory->BookMethod( TMVA::Types::kBDT, "BDTB4",
+			 "!H:!V:NTrees=400:BoostType=Bagging:SeparationType=GiniIndex:nCuts=40" );
   
   if (Use["BDTD"]) // Decorrelation + Adaptive Boost
     factory->BookMethod( TMVA::Types::kBDT, "BDTD",
@@ -574,11 +705,11 @@ void Train( int whichBkg = 1,  TString myMethodList = "" ) {
   outputFile->Close();
   
   std::string toDo;
-  toDo = "rm -r Weights-" + outputName + "/";
+  toDo = "rm -r Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var/";
   std::cerr << "toDo = " << toDo << std::endl;
   system (toDo.c_str()); 
   
-  toDo = "mv weights Weights-" + outputName + "/";
+  toDo = "mv weights Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var/";
   std::cerr << "toDo = " << toDo << std::endl;
   system (toDo.c_str()); 
   
