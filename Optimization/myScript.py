@@ -23,11 +23,14 @@ os.system('root -l -b -q \'mymacros/mvas.C(\"' + sys.argv[1] + '.root\",3)\'') #
 os.system('rm -rf plots' + sys.argv[1] + '/')
 os.system('mv plots plots' + sys.argv[1] + '/')
 
+weightName = sys.argv[1]
+weightNameOK = weightName.replace("TMVA-", "")
+
 os.system('mkdir ~/www/figuresLxplus/')
 os.system('mkdir ~/www/figuresLxplus/' + time.strftime("%d%b%Y") + '/')
 os.system('mkdir ~/www/figuresLxplus/' + time.strftime("%d%b%Y") + '/monoH')
 os.system('mkdir ~/www/figuresLxplus/' + time.strftime("%d%b%Y") + '/monoH/TMVA')
 os.system('mkdir ~/www/figuresLxplus/' + time.strftime("%d%b%Y") + '/monoH/TMVA/plots' + sys.argv[1])
 
-os.system('cp ~/www/index.php plots' + sys.argv[1] + '/* ~/www/figuresLxplus/' + time.strftime("%d%b%Y") + '/monoH/TMVA/plots' + sys.argv[1])
+os.system('cp -r ~/www/index.php plots' + sys.argv[1] + '/* Weights-' + weightNameOK + ' ~/www/figuresLxplus/' + time.strftime("%d%b%Y") + '/monoH/TMVA/plots' + sys.argv[1])
 

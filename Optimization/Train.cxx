@@ -77,7 +77,6 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   // but of course the real application is when you write your own
   // method based)
   
-
   //Put here the name you want for the output files
   if (whichSig == 1) outputNameS = "2HDM";
   if (whichSig == 2) outputNameS = "Zbar"; 
@@ -225,7 +224,8 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   // If you wish to modify default settings
   // (please check "src/Config.h" to see all available global options)
   //    (TMVA::gConfig().GetVariablePlotting()).fTimesRMS = 8.0;
-  //    (TMVA::gConfig().GetIONames()).fWeightFileDir = "myWeightDirectory";
+  (TMVA::gConfig().GetIONames()).fWeightFileDir = "Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var/"; 
+  //"myWeightDirectory";
   
   // Define the input variables that shall be used for the MVA training
   // note that you may also use variable expressions, such as: "3*var1/var2*abs(var3)"
@@ -704,14 +704,14 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   // Save the output
   outputFile->Close();
   
-  std::string toDo;
-  toDo = "rm -r Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var/";
-  std::cerr << "toDo = " << toDo << std::endl;
-  system (toDo.c_str()); 
+  // std::string toDo;
+  // toDo = "rm -r Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var/";
+  // std::cerr << "toDo = " << toDo << std::endl;
+  // system (toDo.c_str()); 
   
-  toDo = "mv weights Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var/";
-  std::cerr << "toDo = " << toDo << std::endl;
-  system (toDo.c_str()); 
+  // toDo = "mv weights Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var/";
+  // std::cerr << "toDo = " << toDo << std::endl;
+  // system (toDo.c_str()); 
   
   
   
