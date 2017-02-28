@@ -246,7 +246,7 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
 
   //Variables ordered by power for BDTG4 - 2HDM
 
-  if (whichSig == 1) {
+  //  if (whichSig == 1) {
     if (nVariables == "0" || nVariables == "1" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
       factory->AddVariable( "mth",        'F' );
     if (nVariables == "0" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
@@ -269,34 +269,34 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
       factory->AddVariable( "dphill", 'F' );
       factory->AddVariable( "std_vector_lepton_pt[1]", 'F' );
     }
-  }
+    //  }
 
   //Variables ordered by power for BDTG4 - Z' baryonic
 
-  if (whichSig == 2) {
-    if (nVariables == "0" || nVariables == "1" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
-      factory->AddVariable( "mth",        'F' );
-    if (nVariables == "0" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
-      factory->AddVariable( "metTtrk",    'F' );
-    if (nVariables == "0" || nVariables == "3" || nVariables == "4" || nVariables == "5")
-      factory->AddVariable( "mtw2", 'F' );
-    if (nVariables == "0" || nVariables == "4" || nVariables == "5")
-      factory->AddVariable( "drll",   'F' );
-    if (nVariables == "0" || nVariables == "5")
-      factory->AddVariable( "ptll", 'F' );
-    if (nVariables == "0"){
-      factory->AddVariable( "mpmet",      'F' );
-      factory->AddVariable( "mtw1", 'F' );
-      factory->AddVariable( "mll",  'F' );
-      factory->AddVariable( "dphilmet",  'F' ); // ---- minimum among the two
-      factory->AddVariable( "dphilmet1", 'F' );
-      factory->AddVariable( "dphilmet2", 'F' );
-      factory->AddVariable( "std_vector_lepton_pt[0]", 'F' );
-      factory->AddVariable( "metPfType1", 'F' );
-      factory->AddVariable( "dphill", 'F' );
-      factory->AddVariable( "std_vector_lepton_pt[1]", 'F' );
-    }
-  }
+  // if (whichSig == 2) {
+  //   if (nVariables == "0" || nVariables == "1" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+  //     factory->AddVariable( "mth",        'F' );
+  //   if (nVariables == "0" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+  //     factory->AddVariable( "metTtrk",    'F' );
+  //   if (nVariables == "0" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+  //     factory->AddVariable( "mtw2", 'F' );
+  //   if (nVariables == "0" || nVariables == "4" || nVariables == "5")
+  //     factory->AddVariable( "drll",   'F' );
+  //   if (nVariables == "0" || nVariables == "5")
+  //     factory->AddVariable( "ptll", 'F' );
+  //   if (nVariables == "0"){
+  //     factory->AddVariable( "mpmet",      'F' );
+  //     factory->AddVariable( "mtw1", 'F' );
+  //     factory->AddVariable( "mll",  'F' );
+  //     factory->AddVariable( "dphilmet",  'F' ); // ---- minimum among the two
+  //     factory->AddVariable( "dphilmet1", 'F' );
+  //     factory->AddVariable( "dphilmet2", 'F' );
+  //     factory->AddVariable( "std_vector_lepton_pt[0]", 'F' );
+  //     factory->AddVariable( "metPfType1", 'F' );
+  //     factory->AddVariable( "dphill", 'F' );
+  //     factory->AddVariable( "std_vector_lepton_pt[1]", 'F' );
+  //   }
+  // }
 
   // You can add so-called "Spectator variables", which are not used in the MVA training,
   // but will appear in the final "TestTree" produced by TMVA. This TestTree will contain the
@@ -316,20 +316,20 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   // Signal
   
   // 2HDM
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_monoH_2HDM_MZp-600_MA0-300.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_monoH_2HDM_MZp-600_MA0-300.root");
   TFile *inputS1a = TFile::Open( fname );
   TTree *signal1a = (TTree*) inputS1a->Get("latino");
   
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_monoH_2HDM_MZp-600_MA0-300.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_monoH_2HDM_MZp-600_MA0-300.root");
   TFile *inputS1b = TFile::Open( fname );
   TTree *signal1b = (TTree*) inputS1b->Get("latino");
   
   // Z' Baryonic
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
   TFile *inputS2a = TFile::Open( fname );
   TTree *signal2a = (TTree*) inputS2a->Get("latino");
   
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
   TFile *inputS2b = TFile::Open( fname );
   TTree *signal2b = (TTree*) inputS2b->Get("latino");
   
@@ -337,65 +337,65 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   //  Backgrounds
   
   // ggZH
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
   TFile *inputB1a = TFile::Open( fname );
   TTree *background1a = (TTree*) inputB1a->Get("latino");
   
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
   TFile *inputB1b = TFile::Open( fname );
   TTree *background1b = (TTree*) inputB1b->Get("latino");
   
   // qqZH
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
   TFile *inputB2a = TFile::Open( fname );
   TTree *background2a = (TTree*) inputB2a->Get("latino");
   
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
   TFile *inputB2b = TFile::Open( fname );
   TTree *background2b = (TTree*) inputB2b->Get("latino");
   
   // SM Higgs
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
   TFile *inputB3a = TFile::Open( fname );
   TTree *background3a = (TTree*) inputB3a->Get("latino");
   
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
   TFile *inputB3b = TFile::Open( fname );
   TTree *background3b = (TTree*) inputB3b->Get("latino");
   
   // WW
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_WWTo2L2Nu.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_WWTo2L2Nu.root");
   TFile *inputB4a = TFile::Open( fname );
   TTree *background4a = (TTree*) inputB4a->Get("latino");
   
-  fname = Form ("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_WWTo2L2Nu.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_WWTo2L2Nu.root");
   TFile *inputB4b = TFile::Open( fname );
   TTree *background4b = (TTree*) inputB4b->Get("latino");
   
   // Top
   TChain *background5a = new TChain("latino");
-  background5a->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_TTTo2L2Nu_ext1__part0.root");
-  background5a->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_TTTo2L2Nu_ext1__part1.root");
-  background5a->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_TTTo2L2Nu_ext1__part2.root");
-  background5a->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_TTTo2L2Nu_ext1__part3.root");
-  background5a->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_TTTo2L2Nu_ext1__part4.root");
-  background5a->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_TTTo2L2Nu_ext1__part5.root");
-  background5a->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_TTTo2L2Nu_ext1__part6.root");
-  background5a->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_TTTo2L2Nu_ext1__part7.root");
-  background5a->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_TTTo2L2Nu_ext1__part8.root");
-  background5a->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel/latino_TTTo2L2Nu_ext1__part9.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part0.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part1.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part2.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part3.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part4.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part5.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part6.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part7.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part8.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part9.root");
   
   TChain *background5b = new TChain("latino");
-  background5b->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_TTTo2L2Nu_ext1__part0.root");
-  background5b->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_TTTo2L2Nu_ext1__part1.root");
-  background5b->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_TTTo2L2Nu_ext1__part2.root");
-  background5b->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_TTTo2L2Nu_ext1__part3.root");
-  background5b->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_TTTo2L2Nu_ext1__part4.root");
-  background5b->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_TTTo2L2Nu_ext1__part5.root");
-  background5b->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_TTTo2L2Nu_ext1__part6.root");
-  background5b->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_TTTo2L2Nu_ext1__part7.root");
-  background5b->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_TTTo2L2Nu_ext1__part8.root");
-  background5b->Add("root://eoscms.cern.ch//eos/cms/store/group/phys_higgs/cmshww/amassiro/HWW12fb_repro/07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel/latino_TTTo2L2Nu_ext1__part9.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part0.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part1.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part2.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part3.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part4.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part5.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part6.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part7.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part8.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part9.root");
   
   // --- Register the training and test trees
   
@@ -441,14 +441,16 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   }
   
   //---- global weight
-  factory->SetSignalWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  // remember metFilter!!!!!
+
+  factory->SetSignalWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
   
-  if (whichBkg == 1) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  if (whichBkg == 2) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  if (whichBkg == 3) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  if (whichBkg == 4) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  if (whichBkg == 5) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  if (whichBkg == 6) factory->SetBackgroundWeightExpression("metFilter*puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  if (whichBkg == 1) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  if (whichBkg == 2) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  if (whichBkg == 3) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  if (whichBkg == 4) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  if (whichBkg == 5) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  if (whichBkg == 6) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
 
   // --- end of tree registration 
   
