@@ -246,7 +246,7 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
 
   //Variables ordered by power for BDTG4 - 2HDM
 
-  if (whichSig == 1) {
+  //  if (whichSig == 1) {
     if (nVariables == "0" || nVariables == "1" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
       factory->AddVariable( "mth",        'F' );
     if (nVariables == "0" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
@@ -269,34 +269,34 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
       factory->AddVariable( "dphill", 'F' );
       factory->AddVariable( "std_vector_lepton_pt[1]", 'F' );
     }
-  }
+    //  }
 
   //Variables ordered by power for BDTG4 - Z' baryonic
 
-  if (whichSig == 2) {
-    if (nVariables == "0" || nVariables == "1" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
-      factory->AddVariable( "mth",        'F' );
-    if (nVariables == "0" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
-      factory->AddVariable( "metTtrk",    'F' );
-    if (nVariables == "0" || nVariables == "3" || nVariables == "4" || nVariables == "5")
-      factory->AddVariable( "mtw2", 'F' );
-    if (nVariables == "0" || nVariables == "4" || nVariables == "5")
-      factory->AddVariable( "drll",   'F' );
-    if (nVariables == "0" || nVariables == "5")
-      factory->AddVariable( "ptll", 'F' );
-    if (nVariables == "0"){
-      factory->AddVariable( "mpmet",      'F' );
-      factory->AddVariable( "mtw1", 'F' );
-      factory->AddVariable( "mll",  'F' );
-      factory->AddVariable( "dphilmet",  'F' ); // ---- minimum among the two
-      factory->AddVariable( "dphilmet1", 'F' );
-      factory->AddVariable( "dphilmet2", 'F' );
-      factory->AddVariable( "std_vector_lepton_pt[0]", 'F' );
-      factory->AddVariable( "metPfType1", 'F' );
-      factory->AddVariable( "dphill", 'F' );
-      factory->AddVariable( "std_vector_lepton_pt[1]", 'F' );
-    }
-  }
+  // if (whichSig == 2) {
+  //   if (nVariables == "0" || nVariables == "1" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+  //     factory->AddVariable( "mth",        'F' );
+  //   if (nVariables == "0" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+  //     factory->AddVariable( "metTtrk",    'F' );
+  //   if (nVariables == "0" || nVariables == "3" || nVariables == "4" || nVariables == "5")
+  //     factory->AddVariable( "mtw2", 'F' );
+  //   if (nVariables == "0" || nVariables == "4" || nVariables == "5")
+  //     factory->AddVariable( "drll",   'F' );
+  //   if (nVariables == "0" || nVariables == "5")
+  //     factory->AddVariable( "ptll", 'F' );
+  //   if (nVariables == "0"){
+  //     factory->AddVariable( "mpmet",      'F' );
+  //     factory->AddVariable( "mtw1", 'F' );
+  //     factory->AddVariable( "mll",  'F' );
+  //     factory->AddVariable( "dphilmet",  'F' ); // ---- minimum among the two
+  //     factory->AddVariable( "dphilmet1", 'F' );
+  //     factory->AddVariable( "dphilmet2", 'F' );
+  //     factory->AddVariable( "std_vector_lepton_pt[0]", 'F' );
+  //     factory->AddVariable( "metPfType1", 'F' );
+  //     factory->AddVariable( "dphill", 'F' );
+  //     factory->AddVariable( "std_vector_lepton_pt[1]", 'F' );
+  //   }
+  // }
 
   // You can add so-called "Spectator variables", which are not used in the MVA training,
   // but will appear in the final "TestTree" produced by TMVA. This TestTree will contain the
