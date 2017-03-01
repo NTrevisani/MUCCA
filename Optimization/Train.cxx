@@ -158,10 +158,35 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   Use["BDT4"]            = 1; // uses Adaptive Boost
   Use["BDT5"]            = 1; // uses Adaptive Boost
   Use["BDT6"]            = 1; // uses Adaptive Boost
+  Use["BDT7"]            = 1; // uses Adaptive Boost
+  Use["BDT8"]            = 1; // uses Adaptive Boost
+  Use["BDT9"]            = 1; // uses Adaptive Boost
+  Use["BDT10"]           = 1; // uses Adaptive Boost
+  Use["BDT11"]           = 1; // uses Adaptive Boost
+  Use["BDT12"]           = 1; // uses Adaptive Boost
+  Use["BDT13"]           = 1; // uses Adaptive Boost
+  Use["BDT14"]           = 1; // uses Adaptive Boost
+  Use["BDT15"]           = 1; // uses Adaptive Boost
+  Use["BDT16"]           = 1; // uses Adaptive Boost
   Use["BDTG"]            = 1; // uses Gradient Boost
   Use["BDTG2"]           = 1; // uses Gradient Boost
   Use["BDTG3"]           = 1; // uses Gradient Boost
   Use["BDTG4"]           = 1; // uses Gradient Boost
+  Use["BDTG5"]           = 1; // uses Gradient Boost
+  Use["BDTG6"]           = 1; // uses Gradient Boost
+  Use["BDTG7"]           = 1; // uses Gradient Boost
+  Use["BDTG8"]           = 1; // uses Gradient Boost
+  Use["BDTG9"]           = 1; // uses Gradient Boost
+  Use["BDTG10"]          = 1; // uses Gradient Boost
+  Use["BDTG11"]          = 1; // uses Gradient Boost
+  Use["BDTG12"]          = 1; // uses Gradient Boost
+  Use["BDTG13"]          = 1; // uses Gradient Boost
+  Use["BDTG14"]          = 1; // uses Gradient Boost
+  Use["BDTG15"]          = 1; // uses Gradient Boost
+  Use["BDTG16"]          = 1; // uses Gradient Boost
+  Use["BDTG17"]          = 1; // uses Gradient Boost
+  Use["BDTG18"]          = 1; // uses Gradient Boost
+  Use["BDTG19"]          = 1; // uses Gradient Boost
   Use["BDTB"]            = 1; // uses Bagging
   Use["BDTB2"]           = 1; // uses Bagging
   Use["BDTB3"]           = 1; // uses Bagging
@@ -705,46 +730,167 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
     factory->BookMethod( TMVA::Types::kSVM, "SVM", "Gamma=0.25:Tol=0.001:VarTransform=Norm" );
   
   // Boosted Decision Trees
-  if (Use["BDTG"]) // Gradient Boost
-    factory->BookMethod( TMVA::Types::kBDT, "BDTG",
-			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );
 
-  if (Use["BDTG2"]) // Gradient Boost
-    factory->BookMethod( TMVA::Types::kBDT, "BDTG2",
-			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );
-
-  if (Use["BDTG3"]) // Gradient Boost
-    factory->BookMethod( TMVA::Types::kBDT, "BDTG3",
-			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );  
-
+  // Reference
   if (Use["BDTG4"]) // Gradient Boost - Reference
     factory->BookMethod( TMVA::Types::kBDT, "BDTG4",
 			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );
-  
-  if (Use["BDT"])  // Adaptive Boost
-    factory->BookMethod( TMVA::Types::kBDT, "BDT",
-			 "!H:!V:NTrees=850:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.8:SeparationType=GiniIndex:nCuts=500" );
-  
-  if (Use["BDT2"])  // Adaptive Boost - Reference
-    factory->BookMethod( TMVA::Types::kBDT, "BDT2",
-			 "!H:!V:NTrees=850:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.05:SeparationType=GiniIndex:nCuts=500" );
-  
-  if (Use["BDT3"])  // Adaptive Boost
-    factory->BookMethod( TMVA::Types::kBDT, "BDT3",
-			 "!H:!V:NTrees=2000:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.05:SeparationType=GiniIndex:nCuts=500" );
-  
+
+  // Changing NTrees
+  if (Use["BDTG"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG",
+			 "!H:!V:NTrees=250:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );
+
+  if (Use["BDTG2"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG2",
+			 "!H:!V:NTrees=1000:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );
+
+  if (Use["BDTG3"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG3",
+			 "!H:!V:NTrees=2000:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );  
+
+  // Changing MinNodeSize
+  if (Use["BDTG5"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG5",
+			 "!H:!V:NTrees=500:MinNodeSize=0.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );
+
+  if (Use["BDTG6"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG6",
+			 "!H:!V:NTrees=500:MinNodeSize=2.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );
+
+  if (Use["BDTG7"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG7",
+			 "!H:!V:NTrees=500:MinNodeSize=5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );  
+
+  // Changing Shrinkage
+  if (Use["BDTG8"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG8",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.1:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );
+
+  if (Use["BDTG9"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG9",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.2:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );
+
+  if (Use["BDTG10"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG10",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.5:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=2" );  
+
+  // Changing GradBaggingFraction
+  if (Use["BDTG11"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG11",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.25:nCuts=500:MaxDepth=2" );
+
+  if (Use["BDTG12"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG12",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.75:nCuts=500:MaxDepth=2" );
+
+  if (Use["BDTG13"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG13",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=1:nCuts=500:MaxDepth=2" );  
+
+  // Changing nCuts
+  if (Use["BDTG14"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG14",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=100:MaxDepth=2" );
+
+  if (Use["BDTG15"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG15",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=1000:MaxDepth=2" );
+
+  if (Use["BDTG16"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG16",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=10000:MaxDepth=2" );  
+
+  // Changing MaxDepth
+  if (Use["BDTG17"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG17",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=3" );
+
+  if (Use["BDTG18"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG18",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=4" );
+
+  if (Use["BDTG19"]) // Gradient Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDTG19",
+			 "!H:!V:NTrees=500:MinNodeSize=1.5%:BoostType=Grad:Shrinkage=0.05:UseBaggedBoost:GradBaggingFraction=0.5:nCuts=500:MaxDepth=5" );  
+
+  //-----------------------------------------------------------------------------------------------------------------------------------------------
+
+  // Adaptive Boost
+
+  // Reference
   if (Use["BDT4"])  // Adaptive Boost - Reference
     factory->BookMethod( TMVA::Types::kBDT, "BDT4",
 			 "!H:!V:NTrees=500:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
   
+  // Changing NTrees
+  if (Use["BDT"])  // Adaptive Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDT",
+			 "!H:!V:NTrees=250:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
+  
+  if (Use["BDT2"])  // Adaptive Boost - Reference
+    factory->BookMethod( TMVA::Types::kBDT, "BDT2",
+			 "!H:!V:NTrees=1000:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
+  
+  if (Use["BDT3"])  // Adaptive Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDT3",
+			 "!H:!V:NTrees=2000:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
+  
+  // Changing MinNodeSize
   if (Use["BDT5"])  // Adaptive Boost
     factory->BookMethod( TMVA::Types::kBDT, "BDT5",
-			 "!H:!V:NTrees=850:MinNodeSize=0.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=20" );
+			 "!H:!V:NTrees=500:MinNodeSize=0.25%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
   
   if (Use["BDT6"])  // Adaptive Boost
     factory->BookMethod( TMVA::Types::kBDT, "BDT6",
-			 "!H:!V:NTrees=850:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.2:SeparationType=GiniIndex:nCuts=20" );
+			 "!H:!V:NTrees=500:MinNodeSize=2.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
   
+  if (Use["BDT7"])  // Adaptive Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDT7",
+			 "!H:!V:NTrees=500:MinNodeSize=5.0%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
+  
+  // Changing MaxDepth
+  if (Use["BDT8"])  // Adaptive Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDT8",
+			 "!H:!V:NTrees=500:MinNodeSize=0.5%:MaxDepth=3:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
+  
+  if (Use["BDT9"])  // Adaptive Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDT9",
+			 "!H:!V:NTrees=500:MinNodeSize=0.5%:MaxDepth=4:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
+  
+  if (Use["BDT10"])  // Adaptive Boost
+    factory->BookMethod( TMVA::Types::kBDT, "BDT10",
+			 "!H:!V:NTrees=500:MinNodeSize=0.5%:MaxDepth=5:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
+  
+  // Changing AdaBoostBeta
+  if (Use["BDT11"])  // Adaptive Boost - Reference
+    factory->BookMethod( TMVA::Types::kBDT, "BDT11",
+			 "!H:!V:NTrees=500:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.5:SeparationType=GiniIndex:nCuts=500" );
+  
+  if (Use["BDT12"])  // Adaptive Boost - Reference
+    factory->BookMethod( TMVA::Types::kBDT, "BDT12",
+			 "!H:!V:NTrees=500:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.2:SeparationType=GiniIndex:nCuts=500" );
+  
+  if (Use["BDT13"])  // Adaptive Boost - Reference
+    factory->BookMethod( TMVA::Types::kBDT, "BDT13",
+			 "!H:!V:NTrees=500:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.8:SeparationType=GiniIndex:nCuts=500" );
+
+  // Changing nCuts
+  if (Use["BDT14"])  // Adaptive Boost - Reference
+    factory->BookMethod( TMVA::Types::kBDT, "BDT14",
+			 "!H:!V:NTrees=500:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=100" );
+
+  if (Use["BDT15"])  // Adaptive Boost - Reference
+    factory->BookMethod( TMVA::Types::kBDT, "BDT15",
+			 "!H:!V:NTrees=500:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=1000" );
+
+  if (Use["BDT16"])  // Adaptive Boost - Reference
+    factory->BookMethod( TMVA::Types::kBDT, "BDT16",
+			 "!H:!V:NTrees=500:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=10000" );
+
+  //-----------------------------------------------------------------------------------------------------------------------------------------------
+  
+
   if (Use["BDTB"]) // Bagging
     factory->BookMethod( TMVA::Types::kBDT, "BDTB",
 			 "!H:!V:NTrees=400:BoostType=Bagging:SeparationType=GiniIndex:nCuts=20" );
