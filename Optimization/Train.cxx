@@ -735,7 +735,7 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   
   if (Use["BDT4"])  // Adaptive Boost - Reference
     factory->BookMethod( TMVA::Types::kBDT, "BDT4",
-			 "!H:!V:NTrees=850:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
+			 "!H:!V:NTrees=500:MinNodeSize=0.5%:MaxDepth=2:BoostType=AdaBoost:AdaBoostBeta=0.1:SeparationType=GiniIndex:nCuts=500" );
   
   if (Use["BDT5"])  // Adaptive Boost
     factory->BookMethod( TMVA::Types::kBDT, "BDT5",
