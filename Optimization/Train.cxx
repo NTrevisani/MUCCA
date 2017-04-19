@@ -341,20 +341,24 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   // Signal
   
   // 2HDM
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_monoH_2HDM_MZp-600_MA0-300.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_monoH_2HDM_MZp-600_MA0-300.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_monoH_2HDM_MZp-600_MA0-400.root");
   TFile *inputS1a = TFile::Open( fname );
   TTree *signal1a = (TTree*) inputS1a->Get("latino");
   
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_monoH_2HDM_MZp-600_MA0-300.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_monoH_2HDM_MZp-600_MA0-300.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_monoH_2HDM_MZp-600_MA0-400.root");
   TFile *inputS1b = TFile::Open( fname );
   TTree *signal1b = (TTree*) inputS1b->Get("latino");
   
   // Z' Baryonic
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
   TFile *inputS2a = TFile::Open( fname );
   TTree *signal2a = (TTree*) inputS2a->Get("latino");
   
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
   TFile *inputS2b = TFile::Open( fname );
   TTree *signal2b = (TTree*) inputS2b->Get("latino");
   
@@ -362,65 +366,111 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   //  Backgrounds
   
   // ggZH
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_GluGluZH_HToWWTo2L2Nu_M125.root");
   TFile *inputB1a = TFile::Open( fname );
   TTree *background1a = (TTree*) inputB1a->Get("latino");
   
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_GluGluZH_HToWWTo2L2Nu_M125.root");
   TFile *inputB1b = TFile::Open( fname );
   TTree *background1b = (TTree*) inputB1b->Get("latino");
   
   // qqZH
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_HZJ_HToWW_M125.root");
   TFile *inputB2a = TFile::Open( fname );
   TTree *background2a = (TTree*) inputB2a->Get("latino");
   
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_HZJ_HToWW_M125.root");
   TFile *inputB2b = TFile::Open( fname );
   TTree *background2b = (TTree*) inputB2b->Get("latino");
   
   // SM Higgs
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
   TFile *inputB3a = TFile::Open( fname );
   TTree *background3a = (TTree*) inputB3a->Get("latino");
   
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
   TFile *inputB3b = TFile::Open( fname );
   TTree *background3b = (TTree*) inputB3b->Get("latino");
   
   // WW
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_WWTo2L2Nu.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_WWTo2L2Nu.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_WWTo2L2Nu.root");
   TFile *inputB4a = TFile::Open( fname );
   TTree *background4a = (TTree*) inputB4a->Get("latino");
   
-  fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_WWTo2L2Nu.root");
+  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_WWTo2L2Nu.root");
+  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_WWTo2L2Nu.root");
   TFile *inputB4b = TFile::Open( fname );
   TTree *background4b = (TTree*) inputB4b->Get("latino");
   
   // Top
+  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part0.root");
+  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part1.root");
+  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part2.root");
+  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part3.root");
+  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part4.root");
+  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part5.root");
+  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part6.root");
+  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part7.root");
+  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part8.root");
+  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part9.root");
   TChain *background5a = new TChain("latino");
-  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part0.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part1.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part2.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part3.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part4.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part5.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part6.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part7.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part8.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part9.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part0.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part1.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part2.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part3.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part4.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part5.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part6.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part7.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part8.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part9.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part10.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part11.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part12.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part13.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part14.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part15.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part16.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part17.root");
+  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part18.root");
   
+  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part0.root");
+  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part1.root");
+  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part2.root");
+  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part3.root");
+  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part4.root");
+  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part5.root");
+  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part6.root");
+  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part7.root");
+  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part8.root");
+  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part9.root");
   TChain *background5b = new TChain("latino");
-  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part0.root");
-  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part1.root");
-  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part2.root");
-  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part3.root");
-  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part4.root");
-  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part5.root");
-  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part6.root");
-  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part7.root");
-  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part8.root");
-  background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part9.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part0.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part1.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part2.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part3.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part4.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part5.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part6.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part7.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part8.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part9.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part10.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part11.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part12.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part13.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part14.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part15.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part16.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part17.root");
+  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part18.root");
   
   // --- Register the training and test trees
   
@@ -466,16 +516,34 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   }
   
   //---- global weight
-  // remember metFilter!!!!!
+  // XSWeight      = 'baseW*GEN_weight_SM/abs(GEN_weight_SM)'
+  // SFweight      = 'puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug'
+  // GenLepMatch   = 'std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]'
 
-  factory->SetSignalWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  
-  if (whichBkg == 1) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  if (whichBkg == 2) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  if (whichBkg == 3) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  if (whichBkg == 4) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  if (whichBkg == 5) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  if (whichBkg == 6) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  // METFilter_Common = '(std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])'
+  // METFilter_DATA   =  METFilter_Common + '*' + '(std_vector_trigger_special[4]*!std_vector_trigger_special[6]*!std_vector_trigger_special[7]*std_vector_trigger_special[8]*std_vector_trigger_special[9])'
+  // METFilter_MCver  =  '(std_vector_trigger_special[8]==-2.)'
+  // METFilter_MCOld  =  '(std_vector_trigger_special[6]*std_vector_trigger_special[7])'
+  // METFilter_MCNew  =  '(std_vector_trigger_special[8]*std_vector_trigger_special[9])'
+
+  // METFilter_MC  =  METFilter_Common + '*' + '(('+METFilter_MCver+'*'+METFilter_MCOld+')||(!'+METFilter_MCver+'*'+METFilter_MCNew+'))'
+
+  // factory->SetSignalWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  // if (whichBkg == 1) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  // if (whichBkg == 2) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  // if (whichBkg == 3) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  // if (whichBkg == 4) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  // if (whichBkg == 5) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  // if (whichBkg == 6) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+
+  factory->SetSignalWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
+
+  if (whichBkg == 1) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
+  if (whichBkg == 2) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
+  if (whichBkg == 3) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
+  if (whichBkg == 4) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
+  if (whichBkg == 5) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
+  if (whichBkg == 6) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
 
   // --- end of tree registration 
   

@@ -19,6 +19,32 @@ source of root, needed for the GUI later
     source /afs/cern.ch/sw/lcg/app/releases/ROOT/5.34.21/x86_64-slc5-gcc47-opt/root/bin/thisroot.sh
 
  
+For Full 2016, when lxbatch is slow:
+
+    root -l -q 'Train.cxx(6,1,"0","em","BDTG4,BDT4")' &
+    root -l -q 'Train.cxx(6,2,"0","em","BDTG4,BDT4")' &
+
+    root -l -q 'Train.cxx(6,1,"0","sf","BDTG4,BDT4")' &
+    root -l -q 'Train.cxx(6,2,"0","sf","BDTG4,BDT4")' &
+
+
+    root -l -q 'Train.cxx(6,1,"5","em","BDTG4,BDT4")' &
+    root -l -q 'Train.cxx(6,2,"5","em","BDTG4,BDT4")' &
+
+    root -l -q 'Train.cxx(6,1,"5","sf","BDTG4,BDT4")' &
+    root -l -q 'Train.cxx(6,2,"5","sf","BDTG4,BDT4")' &
+
+    python myScript.py TMVA-2HDM_TTbar_0var_em 
+    python myScript.py TMVA-Zbar_TTbar_0var_em 
+
+    python myScript.py TMVA-2HDM_TTbar_0var_sf 
+    python myScript.py TMVA-Zbar_TTbar_0var_sf 
+
+    python myScript.py TMVA-2HDM_TTbar_5var_em 
+    python myScript.py TMVA-Zbar_TTbar_5var_em 
+
+    python myScript.py TMVA-2HDM_TTbar_5var_sf 
+    python myScript.py TMVA-Zbar_TTbar_5var_sf 
 
 Train:
 
