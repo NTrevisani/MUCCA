@@ -342,23 +342,23 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   
   // 2HDM
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_monoH_2HDM_MZp-600_MA0-300.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_monoH_2HDM_MZp-600_MA0-400.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_monoH_2HDM_MZp-600_MA0-400.root");
   TFile *inputS1a = TFile::Open( fname );
   TTree *signal1a = (TTree*) inputS1a->Get("latino");
   
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_monoH_2HDM_MZp-600_MA0-300.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_monoH_2HDM_MZp-600_MA0-400.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel//latino_monoH_2HDM_MZp-600_MA0-400.root");
   TFile *inputS1b = TFile::Open( fname );
   TTree *signal1b = (TTree*) inputS1b->Get("latino");
   
   // Z' Baryonic
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
   TFile *inputS2a = TFile::Open( fname );
   TTree *signal2a = (TTree*) inputS2a->Get("latino");
   
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
   TFile *inputS2b = TFile::Open( fname );
   TTree *signal2b = (TTree*) inputS2b->Get("latino");
   
@@ -367,45 +367,45 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   
   // ggZH
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_GluGluZH_HToWWTo2L2Nu_M125.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_GluGluZH_HToWWTo2L2Nu_M125.root");
   TFile *inputB1a = TFile::Open( fname );
   TTree *background1a = (TTree*) inputB1a->Get("latino");
   
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_GluGluZH_HToWWTo2L2Nu_M125.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_GluGluZH_HToWWTo2L2Nu_M125.root");
   TFile *inputB1b = TFile::Open( fname );
   TTree *background1b = (TTree*) inputB1b->Get("latino");
   
   // qqZH
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_HZJ_HToWW_M125.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_HZJ_HToWW_M125.root");
   TFile *inputB2a = TFile::Open( fname );
   TTree *background2a = (TTree*) inputB2a->Get("latino");
   
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_HZJ_HToWW_M125.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_HZJ_HToWW_M125.root");
   TFile *inputB2b = TFile::Open( fname );
   TTree *background2b = (TTree*) inputB2b->Get("latino");
   
   // SM Higgs
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
   TFile *inputB3a = TFile::Open( fname );
   TTree *background3a = (TTree*) inputB3a->Get("latino");
   
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
   TFile *inputB3b = TFile::Open( fname );
   TTree *background3b = (TTree*) inputB3b->Get("latino");
   
   // WW
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_WWTo2L2Nu.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_WWTo2L2Nu.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_WWTo2L2Nu.root");
   TFile *inputB4a = TFile::Open( fname );
   TTree *background4a = (TTree*) inputB4a->Get("latino");
   
   //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_WWTo2L2Nu.root");
-  fname = Form ("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_WWTo2L2Nu.root");
+  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_WWTo2L2Nu.root");
   TFile *inputB4b = TFile::Open( fname );
   TTree *background4b = (TTree*) inputB4b->Get("latino");
   
@@ -421,25 +421,25 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part8.root");
   // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part9.root");
   TChain *background5a = new TChain("latino");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part0.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part1.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part2.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part3.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part4.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part5.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part6.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part7.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part8.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part9.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part10.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part11.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part12.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part13.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part14.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part15.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part16.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part17.root");
-  background5a->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel/latino_TTTo2L2Nu__part18.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part0.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part1.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part2.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part3.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part4.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part5.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part6.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part7.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part8.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part9.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part10.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part11.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part12.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part13.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part14.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part15.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part16.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part17.root");
+  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part18.root");
   
   // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part0.root");
   // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part1.root");
@@ -452,25 +452,25 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part8.root");
   // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part9.root");
   TChain *background5b = new TChain("latino");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part0.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part1.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part2.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part3.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part4.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part5.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part6.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part7.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part8.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part9.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part10.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part11.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part12.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part13.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part14.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part15.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part16.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part17.root");
-  background5b->Add("/eos/cms/store/group/phys_higgs/cmshww/amassiro/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel/latino_TTTo2L2Nu__part18.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part0.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part1.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part2.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part3.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part4.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part5.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part6.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part7.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part8.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part9.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part10.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part11.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part12.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part13.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part14.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part15.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part16.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part17.root");
+  background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part18.root");
   
   // --- Register the training and test trees
   
@@ -560,72 +560,33 @@ void Train( int whichBkg = 1, int whichSig = 1, TString nVariables = "1", TStrin
   
   if (channel == "em"){
     mycuts = "std_vector_lepton_pt[0]>25 && std_vector_lepton_pt[1]>20 \
+            && (std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*13) \
             && std_vector_lepton_pt[2]<10 \
-            && njet >= 0 \
             && mll>12 \
             && metPfType1 > 20 \
             && mpmet > 20 \
             && ptll > 30 \
-            && mll < 76 \
-            && drll < 2.5 \
-            && mth > 40 \
-            && (std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*13) \
-            && ( std_vector_jet_pt[0] < 20 || std_vector_jet_cmvav2[0] < -0.715 ) \
-            && ( std_vector_jet_pt[1] < 20 || std_vector_jet_cmvav2[1] < -0.715 ) \
-            && ( std_vector_jet_pt[2] < 20 || std_vector_jet_cmvav2[2] < -0.715 ) \
-            && ( std_vector_jet_pt[3] < 20 || std_vector_jet_cmvav2[3] < -0.715 ) \
-            && ( std_vector_jet_pt[4] < 20 || std_vector_jet_cmvav2[4] < -0.715 ) \
-            && ( std_vector_jet_pt[5] < 20 || std_vector_jet_cmvav2[5] < -0.715 ) \
-            && ( std_vector_jet_pt[6] < 20 || std_vector_jet_cmvav2[6] < -0.715 ) \
-            && ( std_vector_jet_pt[7] < 20 || std_vector_jet_cmvav2[7] < -0.715 ) \
-            && ( std_vector_jet_pt[8] < 20 || std_vector_jet_cmvav2[8] < -0.715 ) \
-            && ( std_vector_jet_pt[9] < 20 || std_vector_jet_cmvav2[9] < -0.715 )";
+            && njet >= 0";
   }
   else if (channel == "ll"){
     mycuts = "std_vector_lepton_pt[0]>25 && std_vector_lepton_pt[1]>20 \
             && std_vector_lepton_pt[2]<10 \
-            && njet >= 0 \
+            && (std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*13 || std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*11 || std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -13*13) \
             && mll>12 \
             && metPfType1 > 20 \
             && mpmet > 20 \
-            && ptll > 30 \
-            && mll < 76 \
-            && drll < 2.5 \
-            && mth > 40 \
-            && (std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*13 || std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*11 || std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -13*13) \
-            && ( std_vector_jet_pt[0] < 20 || std_vector_jet_cmvav2[0] < -0.715 ) \
-            && ( std_vector_jet_pt[1] < 20 || std_vector_jet_cmvav2[1] < -0.715 ) \
-            && ( std_vector_jet_pt[2] < 20 || std_vector_jet_cmvav2[2] < -0.715 ) \
-            && ( std_vector_jet_pt[3] < 20 || std_vector_jet_cmvav2[3] < -0.715 ) \
-            && ( std_vector_jet_pt[4] < 20 || std_vector_jet_cmvav2[4] < -0.715 ) \
-            && ( std_vector_jet_pt[5] < 20 || std_vector_jet_cmvav2[5] < -0.715 ) \
-            && ( std_vector_jet_pt[6] < 20 || std_vector_jet_cmvav2[6] < -0.715 ) \
-            && ( std_vector_jet_pt[7] < 20 || std_vector_jet_cmvav2[7] < -0.715 ) \
-            && ( std_vector_jet_pt[8] < 20 || std_vector_jet_cmvav2[8] < -0.715 ) \
-            && ( std_vector_jet_pt[9] < 20 || std_vector_jet_cmvav2[9] < -0.715 )";
+            && ptll > 30";
+            && njet >= 0 \
   }
   else if (channel == "sf"){
     mycuts = "std_vector_lepton_pt[0]>25 && std_vector_lepton_pt[1]>20 \
             && std_vector_lepton_pt[2]<10 \
+            && ((std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*11) || (std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -13*13)) \
             && njet >= 0 \
             && mll>12 \
             && metPfType1 > 20 \
-            && mll < 76 \
-            && drll < 2.5 \
-            && mth > 40 \
-            && ((std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*11) || (std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -13*13)) \
             && ptll > 45 \
-            && mpmet > 45 \
-            && ( std_vector_jet_pt[0] < 20 || std_vector_jet_cmvav2[0] < -0.715 ) \
-            && ( std_vector_jet_pt[1] < 20 || std_vector_jet_cmvav2[1] < -0.715 ) \
-            && ( std_vector_jet_pt[2] < 20 || std_vector_jet_cmvav2[2] < -0.715 ) \
-            && ( std_vector_jet_pt[3] < 20 || std_vector_jet_cmvav2[3] < -0.715 ) \
-            && ( std_vector_jet_pt[4] < 20 || std_vector_jet_cmvav2[4] < -0.715 ) \
-            && ( std_vector_jet_pt[5] < 20 || std_vector_jet_cmvav2[5] < -0.715 ) \
-            && ( std_vector_jet_pt[6] < 20 || std_vector_jet_cmvav2[6] < -0.715 ) \
-            && ( std_vector_jet_pt[7] < 20 || std_vector_jet_cmvav2[7] < -0.715 ) \
-            && ( std_vector_jet_pt[8] < 20 || std_vector_jet_cmvav2[8] < -0.715 ) \
-            && ( std_vector_jet_pt[9] < 20 || std_vector_jet_cmvav2[9] < -0.715 )";
+            && mpmet > 45";
   }
   else{
     cout<<channel<<": I do not know this channel"<<endl;
