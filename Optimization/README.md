@@ -21,18 +21,35 @@ source of root, needed for the GUI later
  
 For Full 2016, when lxbatch is slow:
 
-    root -l -q 'Train.cxx(6,1,"0","em","BDTG4,BDT4")' &
-    root -l -q 'Train.cxx(6,2,"0","em","BDTG4,BDT4")' &
+    root -l -q 'Train.cxx(6,1,"0","em","BDTG18,BDT7","low")'
+    root -l -q 'Train.cxx(6,2,"0","em","BDTG19,BDT7","low")'
 
-    root -l -q 'Train.cxx(6,1,"0","sf","BDTG4,BDT4")' &
-    root -l -q 'Train.cxx(6,2,"0","sf","BDTG4,BDT4")' &
+    root -l -q 'Train.cxx(6,1,"0","sf","BDTG18,BDT7","low")'
+    root -l -q 'Train.cxx(6,2,"0","sf","BDTG19,BDT7","low")'
 
 
-    root -l -q 'Train.cxx(6,1,"5","em","BDTG4,BDT4")' &
-    root -l -q 'Train.cxx(6,2,"5","em","BDTG4,BDT4")' &
+    root -l -q 'Train.cxx(6,1,"0","em","BDTG18,BDT7","high")'
+    root -l -q 'Train.cxx(6,2,"0","em","BDTG19,BDT7","high")'
 
-    root -l -q 'Train.cxx(6,1,"5","sf","BDTG4,BDT4")' &
-    root -l -q 'Train.cxx(6,2,"5","sf","BDTG4,BDT4")' &
+    root -l -q 'Train.cxx(6,1,"0","sf","BDTG18,BDT7","high")' &
+    root -l -q 'Train.cxx(6,2,"0","sf","BDTG19,BDT7","high")' &
+
+
+
+    root -l -q 'Train.cxx(6,1,"5","em","BDTG19,BDT7","low")' &
+    root -l -q 'Train.cxx(6,2,"5","em","BDTG19,BDT7","low")' &
+
+    root -l -q 'Train.cxx(6,1,"5","sf","BDTG19,BDT7","low")' &
+    root -l -q 'Train.cxx(6,2,"5","sf","BDTG19,BDT7","low")' &
+
+
+    root -l -q 'Train.cxx(6,1,"5","em","BDTG19,BDT7","high")' &
+    root -l -q 'Train.cxx(6,2,"5","em","BDTG19,BDT7","high")' &
+
+    root -l -q 'Train.cxx(6,1,"5","sf","BDTG19,BDT7","high")' &
+    root -l -q 'Train.cxx(6,2,"5","sf","BDTG19,BDT7","high")' &
+
+
 
     python myScript.py TMVA-2HDM_TTbar_0var_em 
     python myScript.py TMVA-Zbar_TTbar_0var_em 
@@ -152,3 +169,16 @@ where:
 
     /home/amassiro/Cern/Code/HIG/MUCCA/
     /afs/cern.ch/user/a/amassiro/work/Latinos/Framework/MUCCA/
+
+
+
+
+
+
+root -l -q 'Train.cxx(5,2,"3","em","BDTG,BDTG2,BDTG3,BDTG4,BDTG5,BDTG6,BDTG7,BDTG8,BDTG9,BDTG10,BDTG11,BDTG12,BDTG13,BDTG14,BDTG15,BDTG16,BDTG17,BDTG18,BDTG19,BDT,BDT2,BDT3,BDT4,BDT5,BDT6,BDT7,BDT8,BDT9,BDT10,BDT11,BDT12,BDT13,BDT14,BDT15,BDT16")' &
+root -l -q 'Train.cxx(5,2,"3","sf","BDTG,BDTG2,BDTG3,BDTG4,BDTG5,BDTG6,BDTG7,BDTG8,BDTG9,BDTG10,BDTG11,BDTG12,BDTG13,BDTG14,BDTG15,BDTG16,BDTG17,BDTG18,BDTG19,BDT,BDT2,BDT3,BDT4,BDT5,BDT6,BDT7,BDT8,BDT9,BDT10,BDT11,BDT12,BDT13,BDT14,BDT15,BDT16")' &
+root -l -q 'Train.cxx(5,2,"4","em","BDTG,BDTG2,BDTG3,BDTG4,BDTG5,BDTG6,BDTG7,BDTG8,BDTG9,BDTG10,BDTG11,BDTG12,BDTG13,BDTG14,BDTG15,BDTG16,BDTG17,BDTG18,BDTG19,BDT,BDT2,BDT3,BDT4,BDT5,BDT6,BDT7,BDT8,BDT9,BDT10,BDT11,BDT12,BDT13,BDT14,BDT15,BDT16")' &
+root -l -q 'Train.cxx(5,2,"4","sf","BDTG,BDTG2,BDTG3,BDTG4,BDTG5,BDTG6,BDTG7,BDTG8,BDTG9,BDTG10,BDTG11,BDTG12,BDTG13,BDTG14,BDTG15,BDTG16,BDTG17,BDTG18,BDTG19,BDT,BDT2,BDT3,BDT4,BDT5,BDT6,BDT7,BDT8,BDT9,BDT10,BDT11,BDT12,BDT13,BDT14,BDT15,BDT16")' &
+root -l -q 'Train.cxx(5,2,"5","em","BDTG,BDTG2,BDTG3,BDTG4,BDTG5,BDTG6,BDTG7,BDTG8,BDTG9,BDTG10,BDTG11,BDTG12,BDTG13,BDTG14,BDTG15,BDTG16,BDTG17,BDTG18,BDTG19,BDT,BDT2,BDT3,BDT4,BDT5,BDT6,BDT7,BDT8,BDT9,BDT10,BDT11,BDT12,BDT13,BDT14,BDT15,BDT16")' &
+root -l -q 'Train.cxx(5,2,"5","sf","BDTG,BDTG2,BDTG3,BDTG4,BDTG5,BDTG6,BDTG7,BDTG8,BDTG9,BDTG10,BDTG11,BDTG12,BDTG13,BDTG14,BDTG15,BDTG16,BDTG17,BDTG18,BDTG19,BDT,BDT2,BDT3,BDT4,BDT5,BDT6,BDT7,BDT8,BDT9,BDT10,BDT11,BDT12,BDT13,BDT14,BDT15,BDT16")' &
+

@@ -9,7 +9,7 @@
 #include "TObjString.h"
 #include "TClass.h"
 
-#include "test/tmvaglob.C"
+#include "mymacros/tmvaglob.C"
 
 // some global lists
 static TList*               TMVAGui_keyContent;

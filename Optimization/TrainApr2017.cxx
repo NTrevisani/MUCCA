@@ -61,13 +61,17 @@ using namespace TMVA;
 TString outputNameS = "";
 TString outputNameB = "";
 
-void Train( int whichBkg = 1, 
-	    int whichSig = 1, 
-	    TString nVariables = "1", 
-	    TString channel = "em", 
-	    TString myMethodList = "",
-	    TString massPoint = "low"
-	    ) {
+void TrainApr2017( int whichBkg = 1, 
+		   int whichSig = 1, 
+		   TString nVariables = "1", 
+		   TString channel = "em", 
+		   TString myMethodList = "",
+		   TString massPoint = "low",
+		   TString runLocal = "true"
+		   ) {
+
+
+  cout<<"myMethodList: "<<myMethodList<<endl;
 
   // The explicit loading of the shared libTMVA is done in TMVAlogon.C, defined in .rootrc
   // if you use your private .rootrc, or run from a different directory, please copy the
@@ -90,7 +94,6 @@ void Train( int whichBkg = 1,
     return;
   }
 
-
   //Put here the name you want for the output files
   if (whichSig == 1) outputNameS = "2HDM";
   if (whichSig == 2) outputNameS = "Zbar"; 
@@ -103,7 +106,12 @@ void Train( int whichBkg = 1,
   if (whichBkg == 6) outputNameB = "TTbar"; 
   if (whichBkg == 7) outputNameB = "DY"; 
 
-  
+  // massPoint can just be "high" or "low"
+  if (massPoint != "low" && massPoint != "high" && massPoint != "new" && massPoint != "superHigh"){
+    cout<<"I don't know the massPoint "<<massPoint<<endl;
+    return;
+  }  
+
   //---------------------------------------------------------------
   // This loads the library
   TMVA::Tools::Instance();
@@ -236,13 +244,24 @@ void Train( int whichBkg = 1,
   // --- Here the preparation phase begins
   
   // Create a ROOT output file where TMVA will store ntuples, histograms, etc.
+  TString thisFolder = "";
+  thisFolder = "/afs/cern.ch/user/n/ntrevisa/work/CMSSW_8_0_26_patch1/src/MUCCA/Optimization/";
+
   TString outfileName = "";
 
+  TString outputFolder = "";
+  outputFolder = thisFolder + "rootFiles_" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPoint + "/";
+
+  TString mkdir = "";
+  mkdir = "mkdir -p " + outputFolder;
+
+  gSystem -> Exec(mkdir);
+
   if (myMethodList != "") {
-    outfileName = "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPoint + ".root";
+    outfileName = outputFolder + "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPoint + ".root";
   }
   else {
-    outfileName = "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "-variables_" + massPoint + ".root" ;
+    outfileName = outputFolder + "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPoint + "-variables.root" ;
   }
   
   TFile* outputFile = TFile::Open( outfileName, "RECREATE" );
@@ -264,7 +283,7 @@ void Train( int whichBkg = 1,
   // If you wish to modify default settings
   // (please check "src/Config.h" to see all available global options)
   //    (TMVA::gConfig().GetVariablePlotting()).fTimesRMS = 8.0;
-  (TMVA::gConfig().GetIONames()).fWeightFileDir = "Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPoint + "/"; 
+  (TMVA::gConfig().GetIONames()).fWeightFileDir = thisFolder + "Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPoint + "/"; 
   //"myWeightDirectory";
   
   // Define the input variables that shall be used for the MVA training
@@ -279,29 +298,28 @@ void Train( int whichBkg = 1,
   //Variables ordered by power for BDTG4 - 2HDM
 
   //  if (whichSig == 1) {
-    if (nVariables == "0" || nVariables == "1" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5" || nVariables == "10")
+    if (nVariables == "0" || nVariables == "1" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
       factory->AddVariable( "mth",        'F' );
-    if (nVariables == "0" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5" || nVariables == "10")
+    if (nVariables == "0" || nVariables == "2" || nVariables == "3" || nVariables == "4" || nVariables == "5")
       factory->AddVariable( "mtw2", 'F' );
-    if (nVariables == "0" || nVariables == "3" || nVariables == "4" || nVariables == "5" || nVariables == "10")
+    if (nVariables == "0" || nVariables == "3" || nVariables == "4" || nVariables == "5")
       factory->AddVariable( "metTtrk",    'F' );
-    if (nVariables == "0" || nVariables == "4" || nVariables == "5" || nVariables == "10")
+    if (nVariables == "0" || nVariables == "4" || nVariables == "5")
       factory->AddVariable( "drll",   'F' );
-    if (nVariables == "0" || nVariables == "5" || nVariables == "10")
+    if (nVariables == "0" || nVariables == "5")
       factory->AddVariable( "ptll", 'F' );
-    if (nVariables == "0" || nVariables == "10"){
+    if (nVariables == "0"){
       factory->AddVariable( "mpmet",      'F' );
       factory->AddVariable( "mtw1", 'F' );
       factory->AddVariable( "mll",  'F' );
       factory->AddVariable( "dphilmet",  'F' ); // ---- minimum among the two
-    }
-    if (nVariables == "0"){
       factory->AddVariable( "dphilmet1", 'F' );
       factory->AddVariable( "dphilmet2", 'F' );
       factory->AddVariable( "std_vector_lepton_pt[0]", 'F' );
       factory->AddVariable( "metPfType1", 'F' );
       factory->AddVariable( "dphill", 'F' );
       factory->AddVariable( "std_vector_lepton_pt[1]", 'F' );
+      //factory->AddVariable( "njet", 'F' );
     }
     //  }
 
@@ -344,156 +362,202 @@ void Train( int whichBkg = 1,
   //    
   //  if (gSystem->AccessPathName( fname ))  // file does not exist in local directory
   //   gSystem->Exec("wget http://root.cern.ch/files/tmva_class_example.root");
-  
+
+    // Upper Folder
+    TString upperFolderDF = "";
+    TString upperFolderSF = "";
+    if (runLocal == "true"){
+      upperFolderDF = "/eos/user/n/ntrevisa/trees/Full2016_Apr17/Apr2017_summer16/"; 
+      upperFolderSF = "/eos/user/n/ntrevisa/trees/Full2016_Apr17/Apr2017_summer16/"; 
+    }
+
+    // Input Folder for Different Flavour Channel
+    TString inputFolderDF = "";
+    inputFolderDF = upperFolderDF + "lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__formulasMC__wwSel__monohSel/";
+
+    // Input Folder for Same Flavour Channel
+    TString inputFolderSF = "";
+    inputFolderSF = upperFolderSF + "lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__formulasMC__sfSel__monohSel/";
+
   TString fname;
   
-  // Signal
-  
-  // 2HDM
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_monoH_2HDM_MZp-600_MA0-300.root");
-  if (massPoint == "low") 
-    fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_monoH_2HDM_MZp-800_MA0-300.root");
+  ////////////
+  // Signal //
+  ////////////
+
+  // 2HDM //
+
+  // Different Flavour Channel
+  if (massPoint == "new")
+    fname = inputFolderDF + "latino_monoH_2HDM_MZp-600_MA0-300.root";
+  else if (massPoint == "low")
+    fname = inputFolderDF + "latino_monoH_2HDM_MZp-600_MA0-400.root";
   else if (massPoint == "high")
-    fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_monoH_2HDM_MZp-2500_MA0-300.root");
-  else{ 
-    cout<<"Please select mass point \"low\" or \"high\" "<<endl;
-    return;
-  } 
+    fname = inputFolderDF + "latino_monoH_2HDM_MZp-2000_MA0-300.root";
+  else if (massPoint == "superHigh")
+    fname = inputFolderDF + "latino_monoH_2HDM_MZp-2500_MA0-300.root";
   TFile *inputS1a = TFile::Open( fname );
   TTree *signal1a = (TTree*) inputS1a->Get("latino");
   
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_monoH_2HDM_MZp-600_MA0-300.root");
-  // fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel//latino_monoH_2HDM_MZp-600_MA0-400.root");
-  // TFile *inputS1b = TFile::Open( fname );
-  // TTree *signal1b = (TTree*) inputS1b->Get("latino");
-  
-  // Z' Baryonic
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
-  if (massPoint == "low") 
-    fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
+  // Same Flavour Channel
+  if (massPoint == "new")
+    fname = inputFolderDF + "latino_monoH_2HDM_MZp-600_MA0-300.root";
+  else if (massPoint == "low")
+    fname = inputFolderDF + "latino_monoH_2HDM_MZp-600_MA0-400.root";
   else if (massPoint == "high")
-    fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_monoH_ZpBaryonic_MZp-1000_MChi-1.root");
-  else{ 
-    cout<<"Please select mass point \"low\" or \"high\" "<<endl;
-    return;
-  } 
+    fname = inputFolderDF + "latino_monoH_2HDM_MZp-2000_MA0-300.root";
+  else if (massPoint == "superHigh")
+    fname = inputFolderDF + "latino_monoH_2HDM_MZp-2500_MA0-300.root";
+  TFile *inputS1b = TFile::Open( fname );
+  TTree *signal1b = (TTree*) inputS1b->Get("latino");
+  
+  // Z' Baryonic //
+
+  // Different Flavour Channel
+  if (massPoint == "low" || massPoint == "new")
+    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-100_MChi-1.root";
+  else if (massPoint == "high")
+    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-1000_MChi-1.root";
+  else if (massPoint == "superHigh")
+    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-10000_MChi-1.root";
   TFile *inputS2a = TFile::Open( fname );
   TTree *signal2a = (TTree*) inputS2a->Get("latino");
   
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
-  // fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_monoH_ZpBaryonic_MZp-100_MChi-1.root");
-  // TFile *inputS2b = TFile::Open( fname );
-  // TTree *signal2b = (TTree*) inputS2b->Get("latino");
+  // Same Flavour Channel
+  if (massPoint == "low" || massPoint == "new")
+    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-100_MChi-1.root";
+  else if (massPoint == "high")
+    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-1000_MChi-1.root";
+  else if (massPoint == "superHigh")
+    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-10000_MChi-1.root";
+  TFile *inputS2b = TFile::Open( fname );
+  TTree *signal2b = (TTree*) inputS2b->Get("latino");
   
+  /////////////////  
+  // Backgrounds //
+  /////////////////  
   
-  //  Backgrounds
-  
-  // ggZH
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
-  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_GluGluZH_HToWWTo2L2Nu_M125.root");
+  // ggZH - background 1 //
+
+  // Different Flavour Channel
+  fname = inputFolderDF + "latino_GluGluZH_HToWWTo2L2Nu_M125.root";
   TFile *inputB1a = TFile::Open( fname );
   TTree *background1a = (TTree*) inputB1a->Get("latino");
   
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_GluGluZH_HToWWTo2L2Nu_M125_noHLT.root");
-  // fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_GluGluZH_HToWWTo2L2Nu_M125.root");
-  // TFile *inputB1b = TFile::Open( fname );
-  // TTree *background1b = (TTree*) inputB1b->Get("latino");
+  // Same Flavour Channel
+  fname = inputFolderSF + "latino_GluGluZH_HToWWTo2L2Nu_M125.root";
+  TFile *inputB1b = TFile::Open( fname );
+  TTree *background1b = (TTree*) inputB1b->Get("latino");
   
-  // qqZH
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
-  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_HZJ_HToWW_M125.root");
+  // qqZH - background 2 //
+
+  // Different Flavour Channel
+  fname = inputFolderDF + "latino_HZJ_HToWWTo2L2Nu_M125.root";
   TFile *inputB2a = TFile::Open( fname );
   TTree *background2a = (TTree*) inputB2a->Get("latino");
   
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_HZJ_HToWWTo2L2Nu_M125_noHLT.root");
-  // fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_HZJ_HToWW_M125.root");
-  // TFile *inputB2b = TFile::Open( fname );
-  // TTree *background2b = (TTree*) inputB2b->Get("latino");
+  // Same Flavour Channel
+  fname = inputFolderSF + "latino_HZJ_HToWWTo2L2Nu_M125.root";
+  TFile *inputB2b = TFile::Open( fname );
+  TTree *background2b = (TTree*) inputB2b->Get("latino");
   
-  // SM Higgs
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
-  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
-  TFile *inputB3a = TFile::Open( fname );
-  TTree *background3a = (TTree*) inputB3a->Get("latino");
+  // SM Higgs - background 3 //
+
+  // Different Flavour Channel
+  TChain *background3a = new TChain("latino");
+  background3a->Add(inputFolderDF + "latino_GluGluHToWWTo2L2NuPowheg_M125.root");
+  background3a->Add(inputFolderDF + "latino_VBFHToWWTo2L2Nu_alternative_M125.root");
+  background3a->Add(inputFolderDF + "latino_HWminusJ_HToWW_M125.root");
+  background3a->Add(inputFolderDF + "latino_HWplusJ_HToWW_M125.root");
+  background3a->Add(inputFolderDF + "latino_bbHToWWTo2L2Nu_M125_yb2.root");
+  background3a->Add(inputFolderDF + "latino_bbHToWWTo2L2Nu_M125_ybyt.root");
+  background3a->Add(inputFolderDF + "latino_GluGluHToTauTau_M125.root");
+  background3a->Add(inputFolderDF + "latino_VBFHToTauTau_M125.root");
+  background3a->Add(inputFolderDF + "latino_HZJ_HToTauTau_M125.root");
+  background3a->Add(inputFolderDF + "latino_HWplusJ_HToTauTau_M125.root");
+  background3a->Add(inputFolderDF + "latino_HWminusJ_HToTauTau_M125.root");
   
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
-  // fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_GluGluHToWWTo2L2NuPowheg_M125.root");
-  // TFile *inputB3b = TFile::Open( fname );
-  // TTree *background3b = (TTree*) inputB3b->Get("latino");
+  // Same Flavour Channel
+  TChain *background3b = new TChain("latino");
+  background3b->Add(inputFolderSF + "latino_GluGluHToWWTo2L2NuPowheg_M125.root");
+  background3b->Add(inputFolderSF + "latino_VBFHToWWTo2L2Nu_alternative_M125.root");
+  background3b->Add(inputFolderSF + "latino_HWminusJ_HToWW_M125.root");
+  background3b->Add(inputFolderSF + "latino_HWplusJ_HToWW_M125.root");
+  background3b->Add(inputFolderSF + "latino_bbHToWWTo2L2Nu_M125_yb2.root");
+  background3b->Add(inputFolderSF + "latino_bbHToWWTo2L2Nu_M125_ybyt.root");
+  background3b->Add(inputFolderSF + "latino_GluGluHToTauTau_M125.root");
+  background3b->Add(inputFolderSF + "latino_VBFHToTauTau_M125.root");
+  background3b->Add(inputFolderSF + "latino_HZJ_HToTauTau_M125.root");
+  background3b->Add(inputFolderSF + "latino_HWplusJ_HToTauTau_M125.root");
+  background3b->Add(inputFolderSF + "latino_HWminusJ_HToTauTau_M125.root");
   
-  // WW
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_WWTo2L2Nu.root");
-  fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_WWTo2L2Nu.root");
-  TFile *inputB4a = TFile::Open( fname );
-  TTree *background4a = (TTree*) inputB4a->Get("latino");
+  // WW - background 4 //
+
+  // Different Flavour Channel
+  TChain *background4a = new TChain("latino");
+  background4a->Add(inputFolderDF + "latino_WWTo2L2Nu.root");
+  background4a->Add(inputFolderDF + "latino_GluGluWWTo2L2Nu_MCFM.root");
   
-  //fname = Form ("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_WWTo2L2Nu.root");
-  // fname = Form ("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_WWTo2L2Nu.root");
-  // TFile *inputB4b = TFile::Open( fname );
-  // TTree *background4b = (TTree*) inputB4b->Get("latino");
+  // Same Flavour Channel
+  TChain *background4b = new TChain("latino");
+  background4b->Add(inputFolderSF + "latino_WWTo2L2Nu.root");
+  background4b->Add(inputFolderSF + "latino_GluGluWWTo2L2Nu_MCFM.root");
   
-  // Top
-  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part0.root");
-  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part1.root");
-  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part2.root");
-  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part3.root");
-  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part4.root");
-  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part5.root");
-  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part6.root");
-  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part7.root");
-  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part8.root");
-  // background5a->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__wwSel__monoH/latino_TTTo2L2Nu_ext1__part9.root");
+  // Top - background 5 //
+
+  // Different Flavour Channel
   TChain *background5a = new TChain("latino");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part0.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part1.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part2.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part3.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part4.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part5.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part6.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part7.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part8.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part9.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part10.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part11.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part12.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part13.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part14.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part15.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part16.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part17.root");
-  background5a->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__wwSel__monohSel/latino_TTTo2L2Nu__part18.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part0.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part1.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part2.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part3.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part4.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part5.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part6.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part7.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part8.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part9.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part10.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part11.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part12.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part13.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part14.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part15.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part16.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part17.root");
+  background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part18.root");
+  background5a->Add(inputFolderDF + "latino_ST_tW_antitop.root");
+  background5a->Add(inputFolderDF + "latino_ST_tW_top.root");
+  // background5a->Add(inputFolderDF + "latino_ST_t-channel_antitop.root");
+  // background5a->Add(inputFolderDF + "latino_ST_t-channel_top.root");
+  // background5a->Add(inputFolderDF + "latino_ST_s-channel.root");
   
-  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part0.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part1.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part2.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part3.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part4.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part5.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part6.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part7.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part8.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees//07Jun2016_spring16_mAODv2_12pXfbm1_repro/MCl2loose__hadd__bSFL2pTEff__l2tight__sfSel__monoH/latino_TTTo2L2Nu_ext1__part9.root");
-  // TChain *background5b = new TChain("latino");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part0.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part1.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part2.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part3.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part4.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part5.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part6.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part7.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part8.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part9.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part10.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part11.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part12.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part13.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part14.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part15.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part16.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part17.root");
-  // background5b->Add("/eos/user/n/ntrevisa/trees/Full2016/Feb2017_summer16/MCl2looseCut__hadd__bSFL2pTEffCut__l2tight__sfSel__monohSel/latino_TTTo2L2Nu__part18.root");
+  // Same Flavour Channel
+  TChain *background5b = new TChain("latino");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part0.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part1.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part2.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part3.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part4.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part5.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part6.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part7.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part8.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part9.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part10.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part11.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part12.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part13.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part14.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part15.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part16.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part17.root");
+  background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part18.root");
+  background5b->Add(inputFolderSF + "latino_ST_tW_antitop.root");
+  background5b->Add(inputFolderSF + "latino_ST_tW_top.root");
+  // background5b->Add(inputFolderSF + "latino_ST_t-channel_antitop.root");
+  // background5b->Add(inputFolderSF + "latino_ST_t-channel_top.root");
+  // background5b->Add(inputFolderSF + "latino_ST_s-channel.root");
   
   // --- Register the training and test trees
   
@@ -520,23 +584,23 @@ void Train( int whichBkg = 1,
       factory->AddBackgroundTree( background5a, backgroundWeight );
   }
 
-  // if (channel == "sf" || channel == "ll"){
-  //   if (whichSig == 1)
-  //     factory->AddSignalTree( signal1b, signalWeight );
-  //   if (whichSig == 2)
-  //     factory->AddSignalTree( signal2b, signalWeight );
+  if (channel == "sf" || channel == "ll"){
+    if (whichSig == 1)
+      factory->AddSignalTree( signal1b, signalWeight );
+    if (whichSig == 2)
+      factory->AddSignalTree( signal2b, signalWeight );
     
-  //   if (whichBkg == 1 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
-  //     factory->AddBackgroundTree( background1b, backgroundWeight );
-  //   if (whichBkg == 2 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
-  //     factory->AddBackgroundTree( background2b, backgroundWeight );
-  //   if (whichBkg == 4 || whichBkg == 5 || whichBkg == 6)  
-  //     factory->AddBackgroundTree( background3b, backgroundWeight );
-  //   if (whichBkg == 5 || whichBkg == 6)  
-  //     factory->AddBackgroundTree( background4b, backgroundWeight );
-  //   if (whichBkg == 6)  
-  //     factory->AddBackgroundTree( background5b, backgroundWeight );
-  // }
+    if (whichBkg == 1 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
+      factory->AddBackgroundTree( background1b, backgroundWeight );
+    if (whichBkg == 2 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
+      factory->AddBackgroundTree( background2b, backgroundWeight );
+    if (whichBkg == 4 || whichBkg == 5 || whichBkg == 6)  
+      factory->AddBackgroundTree( background3b, backgroundWeight );
+    if (whichBkg == 5 || whichBkg == 6)  
+      factory->AddBackgroundTree( background4b, backgroundWeight );
+    if (whichBkg == 6)  
+      factory->AddBackgroundTree( background5b, backgroundWeight );
+  }
   
   //---- global weight
   // XSWeight      = 'baseW*GEN_weight_SM/abs(GEN_weight_SM)'
@@ -551,22 +615,37 @@ void Train( int whichBkg = 1,
 
   // METFilter_MC  =  METFilter_Common + '*' + '(('+METFilter_MCver+'*'+METFilter_MCOld+')||(!'+METFilter_MCver+'*'+METFilter_MCNew+'))'
 
-  // factory->SetSignalWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  // if (whichBkg == 1) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  // if (whichBkg == 2) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  // if (whichBkg == 3) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  // if (whichBkg == 4) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  // if (whichBkg == 5) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  // if (whichBkg == 6) factory->SetBackgroundWeightExpression("puW*baseW*bPogSF*effTrigW*std_vector_lepton_idisoW[0]*std_vector_lepton_idisoW[1]*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  // 2HDM
+  //  if (whichSig == 1)
+  factory->SetSignalWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
+  //  factory->SetSignalWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
 
-  factory->SetSignalWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
+  // Zbar
+  // if (whichSig == 2)
+  // factory->SetSignalWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
 
-  if (whichBkg == 1) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
-  if (whichBkg == 2) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
-  if (whichBkg == 3) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
-  if (whichBkg == 4) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
-  if (whichBkg == 5) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
-  if (whichBkg == 6) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1] * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
+  // ggZH
+  //  if (whichBkg == 1) 
+  //factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+
+  // // qqZH
+  // if (whichBkg == 2) 
+  factory->SetBackgroundWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
+
+  // // SM Higgs
+  // if (whichBkg == 3) 
+  //   factory->SetBackgroundWeightExpression("XSWeight*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
+
+  // // WW
+  // if (whichBkg == 4) 
+  //   factory->SetBackgroundWeightExpression("XSWeight*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC*nllW");
+
+  // // Top
+  // if (whichBkg == 5) 
+  //   factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+
+  //  if (whichBkg == 6) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  // * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
 
   // --- end of tree registration 
   
@@ -580,17 +659,17 @@ void Train( int whichBkg = 1,
   //  TCut mycutb = "ch1*ch2<0 && pt2>20 && mpmet>20 && pfmet>20 && mll>12 && nextra==0"; // for example: TCut mycutb = "abs(var1)<0.5";
   
   TCut mycuts = "";
-  
+
   if (channel == "em"){
     mycuts = "std_vector_lepton_pt[0]>25 && std_vector_lepton_pt[1]>20 \
             && (std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*13) \
             && std_vector_lepton_pt[2]<10 \
             && mll>12 \
-            && mll<76 \
-            && drll<2.5 \
             && metPfType1 > 20 \
             && mpmet > 20 \
             && ptll > 30 \
+            && mll < 76   \
+            && drll < 2.5 \
             && njet >= 0";
   }
   else if (channel == "ll"){
@@ -600,18 +679,22 @@ void Train( int whichBkg = 1,
             && mll>12 \
             && metPfType1 > 20 \
             && mpmet > 20 \
-            && njet >= 0 \
-            && ptll > 30";
+            && ptll > 30 \
+            && mll < 76   \
+            && drll < 2.5 \
+            && njet >= 0";
   }
   else if (channel == "sf"){
     mycuts = "std_vector_lepton_pt[0]>25 && std_vector_lepton_pt[1]>20 \
             && std_vector_lepton_pt[2]<10 \
             && ((std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -11*11) || (std_vector_lepton_flavour[0] * std_vector_lepton_flavour[1] == -13*13)) \
-            && njet >= 0 \
             && mll>12 \
             && metPfType1 > 20 \
+            && mpmet > 45 \
             && ptll > 45 \
-            && mpmet > 45";
+            && mll < 76   \
+            && drll < 2.5 \
+            && njet >= 0";
   }
   else{
     cout<<channel<<": I do not know this channel"<<endl;
