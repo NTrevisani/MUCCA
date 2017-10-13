@@ -61,12 +61,15 @@ using namespace TMVA;
 TString outputNameS = "";
 TString outputNameB = "";
 
+// e.g. root -l -q 'TrainApr2017.cxx(1,6,"0","em","BDT7","600","300","true")'
+
 void TrainApr2017( int whichBkg = 1, 
 		   int whichSig = 1, 
 		   TString nVariables = "1", 
 		   TString channel = "em", 
 		   TString myMethodList = "",
-		   TString massPoint = "low",
+		   TString massPointA = "600", // mZ'
+		   TString massPointB = "300", // mA0 or mChi
 		   TString runLocal = "true"
 		   ) {
 
@@ -106,11 +109,11 @@ void TrainApr2017( int whichBkg = 1,
   if (whichBkg == 6) outputNameB = "TTbar"; 
   if (whichBkg == 7) outputNameB = "DY"; 
 
-  // massPoint can just be "high" or "low"
-  if (massPoint != "low" && massPoint != "high" && massPoint != "new" && massPoint != "superHigh"){
-    cout<<"I don't know the massPoint "<<massPoint<<endl;
-    return;
-  }  
+  // // massPoint can just be "high" or "low"
+  // if (massPoint != "low" && massPoint != "high" && massPoint != "new" && massPoint != "superHigh"){
+  //   cout<<"I don't know the massPoint "<<massPoint<<endl;
+  //   return;
+  // }  
 
   //---------------------------------------------------------------
   // This loads the library
@@ -250,7 +253,7 @@ void TrainApr2017( int whichBkg = 1,
   TString outfileName = "";
 
   TString outputFolder = "";
-  outputFolder = thisFolder + "rootFiles_" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPoint + "/";
+  outputFolder = thisFolder + "rootFiles_" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB + "/";
 
   TString mkdir = "";
   mkdir = "mkdir -p " + outputFolder;
@@ -258,10 +261,10 @@ void TrainApr2017( int whichBkg = 1,
   gSystem -> Exec(mkdir);
 
   if (myMethodList != "") {
-    outfileName = outputFolder + "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPoint + ".root";
+    outfileName = outputFolder + "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB + ".root";
   }
   else {
-    outfileName = outputFolder + "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPoint + "-variables.root" ;
+    outfileName = outputFolder + "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB + "-variables.root" ;
   }
   
   TFile* outputFile = TFile::Open( outfileName, "RECREATE" );
@@ -283,7 +286,7 @@ void TrainApr2017( int whichBkg = 1,
   // If you wish to modify default settings
   // (please check "src/Config.h" to see all available global options)
   //    (TMVA::gConfig().GetVariablePlotting()).fTimesRMS = 8.0;
-  (TMVA::gConfig().GetIONames()).fWeightFileDir = thisFolder + "Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPoint + "/"; 
+  (TMVA::gConfig().GetIONames()).fWeightFileDir = thisFolder + "Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB + "/"; 
   //"myWeightDirectory";
   
   // Define the input variables that shall be used for the MVA training
@@ -385,54 +388,53 @@ void TrainApr2017( int whichBkg = 1,
   // Signal //
   ////////////
 
+  // Signal files and trees declaration
+  TFile *inputSA;
+  TTree *signalA;
+
+  TFile *inputSB;
+  TTree *signalB;
+
+  // TFile *inputS2a;
+  // TTree *signal2a;
+
+  // TFile *inputS2b;
+  // TTree *signal2b;
+
   // 2HDM //
 
-  // Different Flavour Channel
-  if (massPoint == "new")
-    fname = inputFolderDF + "latino_monoH_2HDM_MZp-600_MA0-300.root";
-  else if (massPoint == "low")
-    fname = inputFolderDF + "latino_monoH_2HDM_MZp-600_MA0-400.root";
-  else if (massPoint == "high")
-    fname = inputFolderDF + "latino_monoH_2HDM_MZp-2000_MA0-300.root";
-  else if (massPoint == "superHigh")
-    fname = inputFolderDF + "latino_monoH_2HDM_MZp-2500_MA0-300.root";
-  TFile *inputS1a = TFile::Open( fname );
-  TTree *signal1a = (TTree*) inputS1a->Get("latino");
-  
-  // Same Flavour Channel
-  if (massPoint == "new")
-    fname = inputFolderDF + "latino_monoH_2HDM_MZp-600_MA0-300.root";
-  else if (massPoint == "low")
-    fname = inputFolderDF + "latino_monoH_2HDM_MZp-600_MA0-400.root";
-  else if (massPoint == "high")
-    fname = inputFolderDF + "latino_monoH_2HDM_MZp-2000_MA0-300.root";
-  else if (massPoint == "superHigh")
-    fname = inputFolderDF + "latino_monoH_2HDM_MZp-2500_MA0-300.root";
-  TFile *inputS1b = TFile::Open( fname );
-  TTree *signal1b = (TTree*) inputS1b->Get("latino");
-  
+  if (whichSig == 1){
+
+    // Different Flavour Channel
+    fname = inputFolderDF + "latino_monoH_2HDM_MZp-" + massPointA + "_MA0-" + massPointB + ".root";
+    cout<<"File name: "<<fname<<endl;
+    inputSA = TFile::Open( fname );
+    signalA = (TTree*) inputSA->Get("latino");
+
+    // Same Flavour Channel
+    fname = inputFolderSF + "latino_monoH_2HDM_MZp-" + massPointA + "_MA0-" + massPointB + ".root";
+    cout<<"File name: "<<fname<<endl;
+    inputSB = TFile::Open( fname );
+    signalB = (TTree*) inputSB->Get("latino");
+  }
+
   // Z' Baryonic //
 
-  // Different Flavour Channel
-  if (massPoint == "low" || massPoint == "new")
-    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-100_MChi-1.root";
-  else if (massPoint == "high")
-    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-1000_MChi-1.root";
-  else if (massPoint == "superHigh")
-    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-10000_MChi-1.root";
-  TFile *inputS2a = TFile::Open( fname );
-  TTree *signal2a = (TTree*) inputS2a->Get("latino");
+  if (whichSig == 2){
+
+    // Different Flavour Channel
+    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-" + massPointA + "_MChi-" + massPointB + ".root";
+    cout<<"File name: "<<fname<<endl;
+    inputSA = TFile::Open( fname );
+    signalA = (TTree*) inputSA->Get("latino");
   
-  // Same Flavour Channel
-  if (massPoint == "low" || massPoint == "new")
-    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-100_MChi-1.root";
-  else if (massPoint == "high")
-    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-1000_MChi-1.root";
-  else if (massPoint == "superHigh")
-    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-10000_MChi-1.root";
-  TFile *inputS2b = TFile::Open( fname );
-  TTree *signal2b = (TTree*) inputS2b->Get("latino");
-  
+    // Same Flavour Channel
+    fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-" + massPointA + "_MChi-" + massPointB + ".root";
+    cout<<"File name: "<<fname<<endl;
+    inputSB = TFile::Open( fname );
+    signalB = (TTree*) inputSB->Get("latino");
+  }
+
   /////////////////  
   // Backgrounds //
   /////////////////  
@@ -564,13 +566,13 @@ void TrainApr2017( int whichBkg = 1,
   // global event weights per tree (see below for setting event-wise weights)
   Double_t signalWeight     = 1.0;
   Double_t backgroundWeight = 1.0;
-  
+
   // You can add an arbitrary number of signal or background trees
   if (channel == "em" || channel == "ll"){
-    if (whichSig == 1)
-      factory->AddSignalTree( signal1a, signalWeight );
-    if (whichSig == 2)
-      factory->AddSignalTree( signal2a, signalWeight );
+    //    if (whichSig == 1)
+    factory->AddSignalTree( signalA, signalWeight );
+    //    if (whichSig == 2)
+    //      factory->AddSignalTree( signal, signalWeight );
     
     if (whichBkg == 1 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
       factory->AddBackgroundTree( background1a, backgroundWeight );
@@ -585,10 +587,10 @@ void TrainApr2017( int whichBkg = 1,
   }
 
   if (channel == "sf" || channel == "ll"){
-    if (whichSig == 1)
-      factory->AddSignalTree( signal1b, signalWeight );
-    if (whichSig == 2)
-      factory->AddSignalTree( signal2b, signalWeight );
+    //    if (whichSig == 1)
+    factory->AddSignalTree( signalB, signalWeight );
+    // if (whichSig == 2)
+    //   factory->AddSignalTree( signal2b, signalWeight );
     
     if (whichBkg == 1 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
       factory->AddBackgroundTree( background1b, backgroundWeight );
