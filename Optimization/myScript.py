@@ -28,5 +28,6 @@ weightNameOK = weightName.replace("TMVA-", "Weights-")
 
 os.system('mkdir -p ~/www/figuresLxplus/' + time.strftime("%d%b%Y") + '/monoH/TMVA/plots_' + sys.argv[2])
 
-os.system('cp -r ~/www/index.php plots_' + sys.argv[2] + '/* ' + weightNameOK + ' ' + sys.argv[1] + '/' + sys.argv[2] + '.root ~/www/figuresLxplus/' + time.strftime("%d%b%Y") + '/monoH/TMVA/plots_' + sys.argv[2])
+#os.system('cp -r ~/www/index.php plots_' + sys.argv[2] + '/* ' + weightNameOK + ' ' + sys.argv[1] + '/' + sys.argv[2] + '.root ~/www/figuresLxplus/' + time.strftime("%d%b%Y") + '/monoH/TMVA/plots_' + sys.argv[2])
+os.system('cp -r ~/www/index.php plots_' + sys.argv[2] + '/* ' + weightNameOK + '  ~/www/figuresLxplus/' + time.strftime("%d%b%Y") + '/monoH/TMVA/plots_' + sys.argv[2])
 
