@@ -68,8 +68,8 @@ void TrainApr2017( int whichBkg = 1,
 		   TString nVariables = "1", 
 		   TString channel = "em", 
 		   TString myMethodList = "",
-		   TString massPointA = "600", // mZ'
-		   TString massPointB = "300", // mA0 or mChi
+		   TString massPointA = "600", // mZ' (0 for all mass point together)
+		   TString massPointB = "300", // mA0 or mChi (0 for all mass point together)
 		   TString runLocal = "true"
 		   ) {
 
@@ -395,44 +395,194 @@ void TrainApr2017( int whichBkg = 1,
   TFile *inputSB;
   TTree *signalB;
 
-  // TFile *inputS2a;
-  // TTree *signal2a;
+  TFile *allInputsA[9];
+  TTree *allSignalsA[9];
 
-  // TFile *inputS2b;
-  // TTree *signal2b;
+  TFile *allInputsB[9];
+  TTree *allSignalsB[9];
+
 
   // 2HDM //
 
   if (whichSig == 1){
 
-    // Different Flavour Channel
-    fname = inputFolderDF + "latino_monoH_2HDM_MZp-" + massPointA + "_MA0-" + massPointB + ".root";
-    cout<<"File name: "<<fname<<endl;
-    inputSA = TFile::Open( fname );
-    signalA = (TTree*) inputSA->Get("latino");
+    if (massPointA == "0" && massPointB == "0"){
 
-    // Same Flavour Channel
-    fname = inputFolderSF + "latino_monoH_2HDM_MZp-" + massPointA + "_MA0-" + massPointB + ".root";
-    cout<<"File name: "<<fname<<endl;
-    inputSB = TFile::Open( fname );
-    signalB = (TTree*) inputSB->Get("latino");
+      // Different Flavour Channel
+      fname = inputFolderDF + "latino_monoH_2HDM_MZp-600_MA0-300.root";
+      allInputsA[0] = TFile::Open( fname );
+      allSignalsA[0] = (TTree*) allInputsA[0]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_2HDM_MZp-800_MA0-300.root";
+      allInputsA[1] = TFile::Open( fname );
+      allSignalsA[1] = (TTree*) allInputsA[1]->Get("latino");
+      
+      fname = inputFolderDF + "latino_monoH_2HDM_MZp-1000_MA0-300.root";
+      allInputsA[2] = TFile::Open( fname );
+      allSignalsA[2] = (TTree*) allInputsA[2]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_2HDM_MZp-1200_MA0-300.root";
+      allInputsA[3] = TFile::Open( fname );
+      allSignalsA[3] = (TTree*) allInputsA[3]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_2HDM_MZp-1400_MA0-300.root";
+      allInputsA[4] = TFile::Open( fname );
+      allSignalsA[4] = (TTree*) allInputsA[4]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_2HDM_MZp-1700_MA0-300.root";
+      allInputsA[5] = TFile::Open( fname );
+      allSignalsA[5] = (TTree*) allInputsA[5]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_2HDM_MZp-2000_MA0-300.root";
+      allInputsA[6] = TFile::Open( fname );
+      allSignalsA[6] = (TTree*) allInputsA[6]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_2HDM_MZp-2500_MA0-300.root";
+      allInputsA[7] = TFile::Open( fname );
+      allSignalsA[7] = (TTree*) allInputsA[7]->Get("latino");
+
+      // Same Flavour Channel
+      fname = inputFolderSF + "latino_monoH_2HDM_MZp-600_MA0-300.root";
+      allInputsB[0] = TFile::Open( fname );
+      allSignalsB[0] = (TTree*) allInputsA[0]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_2HDM_MZp-800_MA0-300.root";
+      allInputsB[1] = TFile::Open( fname );
+      allSignalsB[1] = (TTree*) allInputsA[1]->Get("latino");
+      
+      fname = inputFolderSF + "latino_monoH_2HDM_MZp-1000_MA0-300.root";
+      allInputsB[2] = TFile::Open( fname );
+      allSignalsB[2] = (TTree*) allInputsA[2]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_2HDM_MZp-1200_MA0-300.root";
+      allInputsB[3] = TFile::Open( fname );
+      allSignalsB[3] = (TTree*) allInputsA[3]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_2HDM_MZp-1400_MA0-300.root";
+      allInputsB[4] = TFile::Open( fname );
+      allSignalsB[4] = (TTree*) allInputsA[4]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_2HDM_MZp-1700_MA0-300.root";
+      allInputsB[5] = TFile::Open( fname );
+      allSignalsB[5] = (TTree*) allInputsA[5]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_2HDM_MZp-2000_MA0-300.root";
+      allInputsB[6] = TFile::Open( fname );
+      allSignalsB[6] = (TTree*) allInputsA[6]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_2HDM_MZp-2500_MA0-300.root";
+      allInputsB[7] = TFile::Open( fname );
+      allSignalsB[7] = (TTree*) allInputsA[7]->Get("latino");
+    }
+
+    else {
+      // Different Flavour Channel
+      fname = inputFolderDF + "latino_monoH_2HDM_MZp-" + massPointA + "_MA0-" + massPointB + ".root";
+      inputSA = TFile::Open( fname );
+      signalA = (TTree*) inputSA->Get("latino");
+      
+      // Same Flavour Channel
+      fname = inputFolderSF + "latino_monoH_2HDM_MZp-" + massPointA + "_MA0-" + massPointB + ".root";
+      inputSB = TFile::Open( fname );
+      signalB = (TTree*) inputSB->Get("latino");
+    }
   }
 
   // Z' Baryonic //
 
   if (whichSig == 2){
 
-    // Different Flavour Channel
-    fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-" + massPointA + "_MChi-" + massPointB + ".root";
-    cout<<"File name: "<<fname<<endl;
-    inputSA = TFile::Open( fname );
-    signalA = (TTree*) inputSA->Get("latino");
-  
-    // Same Flavour Channel
-    fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-" + massPointA + "_MChi-" + massPointB + ".root";
-    cout<<"File name: "<<fname<<endl;
-    inputSB = TFile::Open( fname );
-    signalB = (TTree*) inputSB->Get("latino");
+    if (massPointA == "0" && massPointB == "0"){
+
+      // Different Flavour Channel
+      fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-10_MChi-1.root";
+      allInputsA[0] = TFile::Open( fname );
+      allSignalsA[0] = (TTree*) allInputsA[0]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-20_MChi-1.root";
+      allInputsA[1] = TFile::Open( fname );
+      allSignalsA[1] = (TTree*) allInputsA[1]->Get("latino");
+      
+      fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-50_MChi-1.root";
+      allInputsA[2] = TFile::Open( fname );
+      allSignalsA[2] = (TTree*) allInputsA[2]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-100_MChi-1.root";
+      allInputsA[3] = TFile::Open( fname );
+      allSignalsA[3] = (TTree*) allInputsA[3]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-200_MChi-1.root";
+      allInputsA[4] = TFile::Open( fname );
+      allSignalsA[4] = (TTree*) allInputsA[4]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-300_MChi-1.root";
+      allInputsA[5] = TFile::Open( fname );
+      allSignalsA[5] = (TTree*) allInputsA[5]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-500_MChi-1.root";
+      allInputsA[6] = TFile::Open( fname );
+      allSignalsA[6] = (TTree*) allInputsA[6]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-1000_MChi-1.root";
+      allInputsA[7] = TFile::Open( fname );
+      allSignalsA[7] = (TTree*) allInputsA[7]->Get("latino");
+
+      fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-2000_MChi-1.root";
+      allInputsA[8] = TFile::Open( fname );
+      allSignalsA[8] = (TTree*) allInputsA[8]->Get("latino");
+
+
+      // Same Flavour Channel
+      fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-10_MChi-1.root";
+      allInputsB[0] = TFile::Open( fname );
+      allSignalsB[0] = (TTree*) allInputsA[0]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-20_MChi-1.root";
+      allInputsB[1] = TFile::Open( fname );
+      allSignalsB[1] = (TTree*) allInputsA[1]->Get("latino");
+      
+      fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-50_MChi-1.root";
+      allInputsB[2] = TFile::Open( fname );
+      allSignalsB[2] = (TTree*) allInputsA[2]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-100_MChi-1.root";
+      allInputsB[3] = TFile::Open( fname );
+      allSignalsB[3] = (TTree*) allInputsA[3]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-200_MChi-1.root";
+      allInputsB[4] = TFile::Open( fname );
+      allSignalsB[4] = (TTree*) allInputsA[4]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-300_MChi-1.root";
+      allInputsB[5] = TFile::Open( fname );
+      allSignalsB[5] = (TTree*) allInputsA[5]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-500_MChi-1.root";
+      allInputsB[6] = TFile::Open( fname );
+      allSignalsB[6] = (TTree*) allInputsA[6]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-1000_MChi-1.root";
+      allInputsB[7] = TFile::Open( fname );
+      allSignalsB[7] = (TTree*) allInputsA[7]->Get("latino");
+
+      fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-2000_MChi-1.root";
+      allInputsB[8] = TFile::Open( fname );
+      allSignalsB[8] = (TTree*) allInputsA[8]->Get("latino");
+    }
+
+    else {
+      // Different Flavour Channel
+      fname = inputFolderDF + "latino_monoH_ZpBaryonic_MZp-" + massPointA + "_MChi-" + massPointB + ".root";
+      cout<<"File name: "<<fname<<endl;
+      inputSA = TFile::Open( fname );
+      signalA = (TTree*) inputSA->Get("latino");
+      
+      // Same Flavour Channel
+      fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-" + massPointA + "_MChi-" + massPointB + ".root";
+      cout<<"File name: "<<fname<<endl;
+      inputSB = TFile::Open( fname );
+      signalB = (TTree*) inputSB->Get("latino");
+    }
   }
 
   /////////////////  
@@ -569,10 +719,31 @@ void TrainApr2017( int whichBkg = 1,
 
   // You can add an arbitrary number of signal or background trees
   if (channel == "em" || channel == "ll"){
-    //    if (whichSig == 1)
-    factory->AddSignalTree( signalA, signalWeight );
-    //    if (whichSig == 2)
-    //      factory->AddSignalTree( signal, signalWeight );
+    if (massPointA == "0" && massPointB == "0")
+      if (whichSig == 1){
+	factory->AddSignalTree(allSignalsA[0], 1. / 16.5956); // 1. / events
+	factory->AddSignalTree(allSignalsA[1], 1. / 12.6303); // 1. / events
+	factory->AddSignalTree(allSignalsA[2], 1. / 6.25251); // 1. / events
+	factory->AddSignalTree(allSignalsA[3], 1. / 3.02949); // 1. / events
+	factory->AddSignalTree(allSignalsA[4], 1. / 1.44171); // 1. / events
+	factory->AddSignalTree(allSignalsA[5], 1. / 0.516394); // 1. / events
+	factory->AddSignalTree(allSignalsA[6], 1. / 0.203947); // 1. / events
+	factory->AddSignalTree(allSignalsA[7], 1. / 0.050828); // 1. / events
+      }
+      else if (whichSig == 2){
+	factory->AddSignalTree(allSignalsA[0], 1. / 54.5653); // 1. / events
+	factory->AddSignalTree(allSignalsA[1], 1. / 52.1725); // 1. / events
+	factory->AddSignalTree(allSignalsA[2], 1. / 60.0030); // 1. / events
+	factory->AddSignalTree(allSignalsA[3], 1. / 61.2326); // 1. / events
+	factory->AddSignalTree(allSignalsA[4], 1. / 52.4396); // 1. / events
+	factory->AddSignalTree(allSignalsA[5], 1. / 48.5594); // 1. / events
+	factory->AddSignalTree(allSignalsA[6], 1. / 29.7216); // 1. / events
+	factory->AddSignalTree(allSignalsA[7], 1. / 6.66016); // 1. / events
+	factory->AddSignalTree(allSignalsA[8], 1. / 0.507575); // 1. / events
+      }
+    else
+      factory->AddSignalTree( signalA, signalWeight );
+    
     
     if (whichBkg == 1 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
       factory->AddBackgroundTree( background1a, backgroundWeight );
@@ -587,10 +758,10 @@ void TrainApr2017( int whichBkg = 1,
   }
 
   if (channel == "sf" || channel == "ll"){
-    //    if (whichSig == 1)
+    // if (massPointA == "0" && massPointB == "0")
+    //   factory->AddSignalTree(allSignalsB, signalWeight);
+    // else
     factory->AddSignalTree( signalB, signalWeight );
-    // if (whichSig == 2)
-    //   factory->AddSignalTree( signal2b, signalWeight );
     
     if (whichBkg == 1 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
       factory->AddBackgroundTree( background1b, backgroundWeight );
@@ -617,37 +788,13 @@ void TrainApr2017( int whichBkg = 1,
 
   // METFilter_MC  =  METFilter_Common + '*' + '(('+METFilter_MCver+'*'+METFilter_MCOld+')||(!'+METFilter_MCver+'*'+METFilter_MCNew+'))'
 
-  // 2HDM
-  //  if (whichSig == 1)
   factory->SetSignalWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
-  //  factory->SetSignalWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
+  
+  if (massPointA == "0" && massPointB == "0"){
+    factory->SetSignalWeightExpression("SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
+  }
 
-  // Zbar
-  // if (whichSig == 2)
-  // factory->SetSignalWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
-
-  // ggZH
-  //  if (whichBkg == 1) 
-  //factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-
-  // // qqZH
-  // if (whichBkg == 2) 
   factory->SetBackgroundWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
-
-  // // SM Higgs
-  // if (whichBkg == 3) 
-  //   factory->SetBackgroundWeightExpression("XSWeight*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
-
-  // // WW
-  // if (whichBkg == 4) 
-  //   factory->SetBackgroundWeightExpression("XSWeight*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC*nllW");
-
-  // // Top
-  // if (whichBkg == 5) 
-  //   factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-
-  //  if (whichBkg == 6) factory->SetBackgroundWeightExpression("baseW*puW*bPogSF_CMVAL*effTrigW*std_vector_lepton_idisoWcut_WP_Tight80X[0]*std_vector_lepton_idisoWcut_WP_Tight80X[1]*veto_EMTFBug*std_vector_lepton_genmatched[0]*std_vector_lepton_genmatched[1]");
-  // * (std_vector_trigger_special[0]*std_vector_trigger_special[1]*std_vector_trigger_special[2]*std_vector_trigger_special[3]*std_vector_trigger_special[5])*(((std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[6]*std_vector_trigger_special[7])) || (!(std_vector_trigger_special[8]==-2.)*(std_vector_trigger_special[8]*std_vector_trigger_special[9])))");
 
   // --- end of tree registration 
   
