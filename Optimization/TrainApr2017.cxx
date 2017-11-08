@@ -721,24 +721,24 @@ void TrainApr2017( int whichBkg = 1,
   if (channel == "em" || channel == "ll"){
     if (massPointA == "0" && massPointB == "0")
       if (whichSig == 1){
-	factory->AddSignalTree(allSignalsA[0], 1. / 16.5956); // 1. / events
-	factory->AddSignalTree(allSignalsA[1], 1. / 12.6303); // 1. / events
-	factory->AddSignalTree(allSignalsA[2], 1. / 6.25251); // 1. / events
-	factory->AddSignalTree(allSignalsA[3], 1. / 3.02949); // 1. / events
-	factory->AddSignalTree(allSignalsA[4], 1. / 1.44171); // 1. / events
+	factory->AddSignalTree(allSignalsA[0], 1. / 16.5956);  // 1. / events
+	factory->AddSignalTree(allSignalsA[1], 1. / 12.6303);  // 1. / events
+	factory->AddSignalTree(allSignalsA[2], 1. / 6.25251);  // 1. / events
+	factory->AddSignalTree(allSignalsA[3], 1. / 3.02949);  // 1. / events
+	factory->AddSignalTree(allSignalsA[4], 1. / 1.44171);  // 1. / events
 	factory->AddSignalTree(allSignalsA[5], 1. / 0.516394); // 1. / events
 	factory->AddSignalTree(allSignalsA[6], 1. / 0.203947); // 1. / events
 	factory->AddSignalTree(allSignalsA[7], 1. / 0.050828); // 1. / events
       }
       else if (whichSig == 2){
-	factory->AddSignalTree(allSignalsA[0], 1. / 54.5653); // 1. / events
-	factory->AddSignalTree(allSignalsA[1], 1. / 52.1725); // 1. / events
-	factory->AddSignalTree(allSignalsA[2], 1. / 60.0030); // 1. / events
-	factory->AddSignalTree(allSignalsA[3], 1. / 61.2326); // 1. / events
-	factory->AddSignalTree(allSignalsA[4], 1. / 52.4396); // 1. / events
-	factory->AddSignalTree(allSignalsA[5], 1. / 48.5594); // 1. / events
-	factory->AddSignalTree(allSignalsA[6], 1. / 29.7216); // 1. / events
-	factory->AddSignalTree(allSignalsA[7], 1. / 6.66016); // 1. / events
+	factory->AddSignalTree(allSignalsA[0], 1. / 54.5653);  // 1. / events
+	factory->AddSignalTree(allSignalsA[1], 1. / 52.1725);  // 1. / events
+	factory->AddSignalTree(allSignalsA[2], 1. / 60.0030);  // 1. / events
+	factory->AddSignalTree(allSignalsA[3], 1. / 61.2326);  // 1. / events
+	factory->AddSignalTree(allSignalsA[4], 1. / 52.4396);  // 1. / events
+	factory->AddSignalTree(allSignalsA[5], 1. / 48.5594);  // 1. / events
+	factory->AddSignalTree(allSignalsA[6], 1. / 29.7216);  // 1. / events
+	factory->AddSignalTree(allSignalsA[7], 1. / 6.66016);  // 1. / events
 	factory->AddSignalTree(allSignalsA[8], 1. / 0.507575); // 1. / events
       }
     else
@@ -790,9 +790,9 @@ void TrainApr2017( int whichBkg = 1,
 
   factory->SetSignalWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
   
-  if (massPointA == "0" && massPointB == "0"){
-    factory->SetSignalWeightExpression("SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
-  }
+  // if (massPointA == "0" && massPointB == "0"){
+  //   factory->SetSignalWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
+  // }
 
   factory->SetBackgroundWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
 
