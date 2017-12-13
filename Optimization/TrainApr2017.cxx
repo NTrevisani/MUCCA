@@ -61,7 +61,11 @@ using namespace TMVA;
 TString outputNameS = "";
 TString outputNameB = "";
 
-// e.g. root -l -q 'TrainApr2017.cxx(1,6,"0","em","BDT7","600","300","true")'
+// e.g. root -l -q 'TrainApr2017.cxx(6,1,"0","em","BDT7","0","0","true","true")'
+// e.g. root -l -q 'TrainApr2017.cxx(6,2,"0","em","BDT7","0","0","true","true")'
+
+// e.g. root -l -q 'TrainApr2017.cxx(6,1,"0","em","BDT7","0","0","true","false")'
+// e.g. root -l -q 'TrainApr2017.cxx(6,2,"0","em","BDT7","0","0","true","false")'
 
 void TrainApr2017( int whichBkg = 1, 
 		   int whichSig = 1, 
@@ -70,10 +74,10 @@ void TrainApr2017( int whichBkg = 1,
 		   TString myMethodList = "",
 		   TString massPointA = "600", // mZ' (0 for all mass point together)
 		   TString massPointB = "300", // mA0 or mChi (0 for all mass point together)
-		   TString runLocal = "true"
+		   TString runLocal = "true",
+		   TString applySignalWeights = "true"
 		   ) {
-
-
+  
   cout<<"myMethodList: "<<myMethodList<<endl;
 
   // The explicit loading of the shared libTMVA is done in TMVAlogon.C, defined in .rootrc
@@ -253,7 +257,11 @@ void TrainApr2017( int whichBkg = 1,
   TString outfileName = "";
 
   TString outputFolder = "";
-  outputFolder = thisFolder + "rootFiles_" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB + "/";
+  outputFolder = thisFolder + "rootFiles_" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB;
+  if (applySignalWeights == "false"){
+    outputFolder = outputFolder + "_noWeights";
+  }
+  outputFolder = outputFolder + "/"; 
 
   TString mkdir = "";
   mkdir = "mkdir -p " + outputFolder;
@@ -262,9 +270,13 @@ void TrainApr2017( int whichBkg = 1,
 
   if (myMethodList != "") {
     outfileName = outputFolder + "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB + ".root";
+    if (applySignalWeights == "false")
+      outfileName = outputFolder + "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB + "_noWeights.root";      
   }
   else {
     outfileName = outputFolder + "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB + "-variables.root" ;
+    if (applySignalWeights == "false")
+      outfileName = outputFolder + "TMVA-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB + "-variables_noWeights.root" ;
   }
   
   TFile* outputFile = TFile::Open( outfileName, "RECREATE" );
@@ -287,6 +299,10 @@ void TrainApr2017( int whichBkg = 1,
   // (please check "src/Config.h" to see all available global options)
   //    (TMVA::gConfig().GetVariablePlotting()).fTimesRMS = 8.0;
   (TMVA::gConfig().GetIONames()).fWeightFileDir = thisFolder + "Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB + "/"; 
+  if (applySignalWeights == "false"){
+  (TMVA::gConfig().GetIONames()).fWeightFileDir = thisFolder + "Weights-" + outputNameS + "_" + outputNameB + "_" + nVariables + "var_" + channel + "_" + massPointA + "_" + massPointB + "_noWeights/"; 
+  }
+
   //"myWeightDirectory";
   
   // Define the input variables that shall be used for the MVA training
@@ -370,17 +386,17 @@ void TrainApr2017( int whichBkg = 1,
     TString upperFolderDF = "";
     TString upperFolderSF = "";
     if (runLocal == "true"){
-      upperFolderDF = "/eos/user/n/ntrevisa/trees/Full2016_Apr17/Apr2017_summer16/"; 
-      upperFolderSF = "/eos/user/n/ntrevisa/trees/Full2016_Apr17/Apr2017_summer16/"; 
+      upperFolderDF = "/eos/user/n/ntrevisa/treesMUCCA/Full2016_Apr17/Apr2017_summer16/"; 
+      upperFolderSF = "/eos/user/n/ntrevisa/treesMUCCA/Full2016_Apr17/Apr2017_summer16/"; 
     }
 
     // Input Folder for Different Flavour Channel
     TString inputFolderDF = "";
-    inputFolderDF = upperFolderDF + "lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__formulasMC__wwSel__monohSel/";
+    inputFolderDF = upperFolderDF + "lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__LepTrgFix__formulasMC__wwSel__monohSel/";
 
     // Input Folder for Same Flavour Channel
     TString inputFolderSF = "";
-    inputFolderSF = upperFolderSF + "lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__formulasMC__sfSel__monohSel/";
+    inputFolderSF = upperFolderSF + "lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__LepTrgFix__formulasMC__sfSel__monohSel/";
 
   TString fname;
   
@@ -400,6 +416,12 @@ void TrainApr2017( int whichBkg = 1,
 
   TFile *allInputsB[9];
   TTree *allSignalsB[9];
+
+  TFile *inputsAllA;
+  TTree *signalsAllA;
+
+  TFile *inputsAllB;
+  TTree *signalsAllB;
 
 
   // 2HDM //
@@ -441,38 +463,42 @@ void TrainApr2017( int whichBkg = 1,
       allInputsA[7] = TFile::Open( fname );
       allSignalsA[7] = (TTree*) allInputsA[7]->Get("latino");
 
+      fname = inputFolderDF + "latino_monoH_2HDM_All.root";
+      inputsAllA = TFile::Open( fname );
+      signalsAllA = (TTree*) inputsAllA->Get("latino");
+
       // Same Flavour Channel
       fname = inputFolderSF + "latino_monoH_2HDM_MZp-600_MA0-300.root";
       allInputsB[0] = TFile::Open( fname );
-      allSignalsB[0] = (TTree*) allInputsA[0]->Get("latino");
+      allSignalsB[0] = (TTree*) allInputsB[0]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_2HDM_MZp-800_MA0-300.root";
       allInputsB[1] = TFile::Open( fname );
-      allSignalsB[1] = (TTree*) allInputsA[1]->Get("latino");
+      allSignalsB[1] = (TTree*) allInputsB[1]->Get("latino");
       
       fname = inputFolderSF + "latino_monoH_2HDM_MZp-1000_MA0-300.root";
       allInputsB[2] = TFile::Open( fname );
-      allSignalsB[2] = (TTree*) allInputsA[2]->Get("latino");
+      allSignalsB[2] = (TTree*) allInputsB[2]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_2HDM_MZp-1200_MA0-300.root";
       allInputsB[3] = TFile::Open( fname );
-      allSignalsB[3] = (TTree*) allInputsA[3]->Get("latino");
+      allSignalsB[3] = (TTree*) allInputsB[3]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_2HDM_MZp-1400_MA0-300.root";
       allInputsB[4] = TFile::Open( fname );
-      allSignalsB[4] = (TTree*) allInputsA[4]->Get("latino");
+      allSignalsB[4] = (TTree*) allInputsB[4]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_2HDM_MZp-1700_MA0-300.root";
       allInputsB[5] = TFile::Open( fname );
-      allSignalsB[5] = (TTree*) allInputsA[5]->Get("latino");
+      allSignalsB[5] = (TTree*) allInputsB[5]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_2HDM_MZp-2000_MA0-300.root";
       allInputsB[6] = TFile::Open( fname );
-      allSignalsB[6] = (TTree*) allInputsA[6]->Get("latino");
+      allSignalsB[6] = (TTree*) allInputsB[6]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_2HDM_MZp-2500_MA0-300.root";
       allInputsB[7] = TFile::Open( fname );
-      allSignalsB[7] = (TTree*) allInputsA[7]->Get("latino");
+      allSignalsB[7] = (TTree*) allInputsB[7]->Get("latino");
     }
 
     else {
@@ -531,43 +557,47 @@ void TrainApr2017( int whichBkg = 1,
       allInputsA[8] = TFile::Open( fname );
       allSignalsA[8] = (TTree*) allInputsA[8]->Get("latino");
 
+      fname = inputFolderDF + "latino_monoH_Zbar_All.root";
+      inputsAllA = TFile::Open( fname );
+      signalsAllA = (TTree*) inputsAllA->Get("latino");
+
 
       // Same Flavour Channel
       fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-10_MChi-1.root";
       allInputsB[0] = TFile::Open( fname );
-      allSignalsB[0] = (TTree*) allInputsA[0]->Get("latino");
+      allSignalsB[0] = (TTree*) allInputsB[0]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-20_MChi-1.root";
       allInputsB[1] = TFile::Open( fname );
-      allSignalsB[1] = (TTree*) allInputsA[1]->Get("latino");
+      allSignalsB[1] = (TTree*) allInputsB[1]->Get("latino");
       
       fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-50_MChi-1.root";
       allInputsB[2] = TFile::Open( fname );
-      allSignalsB[2] = (TTree*) allInputsA[2]->Get("latino");
+      allSignalsB[2] = (TTree*) allInputsB[2]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-100_MChi-1.root";
       allInputsB[3] = TFile::Open( fname );
-      allSignalsB[3] = (TTree*) allInputsA[3]->Get("latino");
+      allSignalsB[3] = (TTree*) allInputsB[3]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-200_MChi-1.root";
       allInputsB[4] = TFile::Open( fname );
-      allSignalsB[4] = (TTree*) allInputsA[4]->Get("latino");
+      allSignalsB[4] = (TTree*) allInputsB[4]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-300_MChi-1.root";
       allInputsB[5] = TFile::Open( fname );
-      allSignalsB[5] = (TTree*) allInputsA[5]->Get("latino");
+      allSignalsB[5] = (TTree*) allInputsB[5]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-500_MChi-1.root";
       allInputsB[6] = TFile::Open( fname );
-      allSignalsB[6] = (TTree*) allInputsA[6]->Get("latino");
+      allSignalsB[6] = (TTree*) allInputsB[6]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-1000_MChi-1.root";
       allInputsB[7] = TFile::Open( fname );
-      allSignalsB[7] = (TTree*) allInputsA[7]->Get("latino");
+      allSignalsB[7] = (TTree*) allInputsB[7]->Get("latino");
 
       fname = inputFolderSF + "latino_monoH_ZpBaryonic_MZp-2000_MChi-1.root";
       allInputsB[8] = TFile::Open( fname );
-      allSignalsB[8] = (TTree*) allInputsA[8]->Get("latino");
+      allSignalsB[8] = (TTree*) allInputsB[8]->Get("latino");
     }
 
     else {
@@ -680,9 +710,6 @@ void TrainApr2017( int whichBkg = 1,
   background5a->Add(inputFolderDF + "latino_TTTo2L2Nu__part18.root");
   background5a->Add(inputFolderDF + "latino_ST_tW_antitop.root");
   background5a->Add(inputFolderDF + "latino_ST_tW_top.root");
-  // background5a->Add(inputFolderDF + "latino_ST_t-channel_antitop.root");
-  // background5a->Add(inputFolderDF + "latino_ST_t-channel_top.root");
-  // background5a->Add(inputFolderDF + "latino_ST_s-channel.root");
   
   // Same Flavour Channel
   TChain *background5b = new TChain("latino");
@@ -707,10 +734,61 @@ void TrainApr2017( int whichBkg = 1,
   background5b->Add(inputFolderSF + "latino_TTTo2L2Nu__part18.root");
   background5b->Add(inputFolderSF + "latino_ST_tW_antitop.root");
   background5b->Add(inputFolderSF + "latino_ST_tW_top.root");
-  // background5b->Add(inputFolderSF + "latino_ST_t-channel_antitop.root");
-  // background5b->Add(inputFolderSF + "latino_ST_t-channel_top.root");
-  // background5b->Add(inputFolderSF + "latino_ST_s-channel.root");
+
   
+  // DY - background 6 //
+
+  // Different Flavour Channel
+  TChain *background6a = new TChain("latino");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-10to50.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part0.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part1.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part2.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part3.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part4.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part5.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part6.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part7.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part8.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part9.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part10.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part11.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part12.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part13.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part14.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part15.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part16.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part17.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part18.root");
+  background6a->Add(inputFolderDF + "latino_DYJetsToLL_M-50__part19.root");
+
+
+  // Same Flavour Channel
+  TChain *background6b = new TChain("latino");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-10to50.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part0.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part1.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part2.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part3.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part4.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part5.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part6.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part7.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part8.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part9.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part10.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part11.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part12.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part13.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part14.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part15.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part16.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part17.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part18.root");
+  background6b->Add(inputFolderSF + "latino_DYJetsToLL_M-50__part19.root");
+
+  cout<<"Hola"<<endl;
+
   // --- Register the training and test trees
   
   // global event weights per tree (see below for setting event-wise weights)
@@ -719,60 +797,111 @@ void TrainApr2017( int whichBkg = 1,
 
   // You can add an arbitrary number of signal or background trees
   if (channel == "em" || channel == "ll"){
-    if (massPointA == "0" && massPointB == "0")
-      if (whichSig == 1){
-	factory->AddSignalTree(allSignalsA[0], 1. / 16.5956);  // 1. / events
-	factory->AddSignalTree(allSignalsA[1], 1. / 12.6303);  // 1. / events
-	factory->AddSignalTree(allSignalsA[2], 1. / 6.25251);  // 1. / events
-	factory->AddSignalTree(allSignalsA[3], 1. / 3.02949);  // 1. / events
-	factory->AddSignalTree(allSignalsA[4], 1. / 1.44171);  // 1. / events
-	factory->AddSignalTree(allSignalsA[5], 1. / 0.516394); // 1. / events
-	factory->AddSignalTree(allSignalsA[6], 1. / 0.203947); // 1. / events
-	factory->AddSignalTree(allSignalsA[7], 1. / 0.050828); // 1. / events
-      }
-      else if (whichSig == 2){
-	factory->AddSignalTree(allSignalsA[0], 1. / 54.5653);  // 1. / events
-	factory->AddSignalTree(allSignalsA[1], 1. / 52.1725);  // 1. / events
-	factory->AddSignalTree(allSignalsA[2], 1. / 60.0030);  // 1. / events
-	factory->AddSignalTree(allSignalsA[3], 1. / 61.2326);  // 1. / events
-	factory->AddSignalTree(allSignalsA[4], 1. / 52.4396);  // 1. / events
-	factory->AddSignalTree(allSignalsA[5], 1. / 48.5594);  // 1. / events
-	factory->AddSignalTree(allSignalsA[6], 1. / 29.7216);  // 1. / events
-	factory->AddSignalTree(allSignalsA[7], 1. / 6.66016);  // 1. / events
-	factory->AddSignalTree(allSignalsA[8], 1. / 0.507575); // 1. / events
-      }
-    else
-      factory->AddSignalTree( signalA, signalWeight );
+    if (applySignalWeights == "true"){
+      if (massPointA == "0" && massPointB == "0")
+	if (whichSig == 1){
+	  factory->AddSignalTree(allSignalsA[0], 1. / 16.5956);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[1], 1. / 12.6303);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[2], 1. / 6.25251);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[3], 1. / 3.02949);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[4], 1. / 1.44171);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[5], 1. / 0.516394); // 1. / events
+	  factory->AddSignalTree(allSignalsA[6], 1. / 0.203947); // 1. / events
+	  factory->AddSignalTree(allSignalsA[7], 1. / 0.050828); // 1. / events
+	}
+	else if (whichSig == 2){
+	  factory->AddSignalTree(allSignalsA[0], 1. / 54.5653);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[1], 1. / 52.1725);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[2], 1. / 60.0030);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[3], 1. / 61.2326);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[4], 1. / 52.4396);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[5], 1. / 48.5594);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[6], 1. / 29.7216);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[7], 1. / 6.66016);  // 1. / events
+	  factory->AddSignalTree(allSignalsA[8], 1. / 0.507575); // 1. / events
+	}
+	else
+	  factory->AddSignalTree( signalA, signalWeight );
+    }
+    else if (applySignalWeights == "false"){
+      if (massPointA == "0" && massPointB == "0")
+      	if (whichSig == 1){
+      	  factory->AddSignalTree(signalsAllA, 1.);
+      	}				
+      	else if (whichSig == 2){	      
+      	  factory->AddSignalTree(signalsAllA, 1.);
+      	}
+      	else
+      	  factory->AddSignalTree( signalA, 1. );
+    }
     
-    
-    if (whichBkg == 1 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
+    if (whichBkg == 1 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6 || whichBkg == 7)
       factory->AddBackgroundTree( background1a, backgroundWeight );
-    if (whichBkg == 2 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
+    if (whichBkg == 2 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6 || whichBkg == 7)
       factory->AddBackgroundTree( background2a, backgroundWeight );
-    if (whichBkg == 4 || whichBkg == 5 || whichBkg == 6)  
+    if (whichBkg == 4 || whichBkg == 5 || whichBkg == 6 || whichBkg == 7)  
       factory->AddBackgroundTree( background3a, backgroundWeight );
-    if (whichBkg == 5 || whichBkg == 6)  
+    if (whichBkg == 5 || whichBkg == 6 || whichBkg == 7)  
       factory->AddBackgroundTree( background4a, backgroundWeight );
-    if (whichBkg == 6)  
+    if (whichBkg == 6 || whichBkg == 7)  
       factory->AddBackgroundTree( background5a, backgroundWeight );
+    if  (whichBkg == 7)
+      factory->AddBackgroundTree( background6a, backgroundWeight );
   }
 
+  // SF //
+
   if (channel == "sf" || channel == "ll"){
-    // if (massPointA == "0" && massPointB == "0")
-    //   factory->AddSignalTree(allSignalsB, signalWeight);
-    // else
-    factory->AddSignalTree( signalB, signalWeight );
+    if (applySignalWeights == "true"){
+      if (massPointA == "0" && massPointB == "0")
+	if (whichSig == 1){
+	  factory->AddSignalTree(allSignalsB[0], 1. / 16.5956);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[1], 1. / 12.6303);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[2], 1. / 6.25251);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[3], 1. / 3.02949);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[4], 1. / 1.44171);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[5], 1. / 0.516394); // 1. / events
+	  factory->AddSignalTree(allSignalsB[6], 1. / 0.203947); // 1. / events
+	  factory->AddSignalTree(allSignalsB[7], 1. / 0.050828); // 1. / events
+	}
+	else if (whichSig == 2){
+	  factory->AddSignalTree(allSignalsB[0], 1. / 54.5653);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[1], 1. / 52.1725);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[2], 1. / 60.0030);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[3], 1. / 61.2326);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[4], 1. / 52.4396);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[5], 1. / 48.5594);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[6], 1. / 29.7216);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[7], 1. / 6.66016);  // 1. / events
+	  factory->AddSignalTree(allSignalsB[8], 1. / 0.507575); // 1. / events
+	}
+	else
+	  factory->AddSignalTree( signalB, signalWeight );
+    }
+    else if (applySignalWeights == "false"){
+      if (massPointA == "0" && massPointB == "0")
+      	if (whichSig == 1){
+      	  factory->AddSignalTree(signalsAllB, 1.);
+      	}				
+      	else if (whichSig == 2){	      
+      	  factory->AddSignalTree(signalsAllB, 1.);
+      	}
+      	else
+      	  factory->AddSignalTree( signalB, 1. );
+    }
     
-    if (whichBkg == 1 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
+    if (whichBkg == 1 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6 || whichBkg == 7)
       factory->AddBackgroundTree( background1b, backgroundWeight );
-    if (whichBkg == 2 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6)
+    if (whichBkg == 2 || whichBkg == 3 || whichBkg == 4 || whichBkg == 5 || whichBkg == 6 || whichBkg == 7)
       factory->AddBackgroundTree( background2b, backgroundWeight );
-    if (whichBkg == 4 || whichBkg == 5 || whichBkg == 6)  
+    if (whichBkg == 4 || whichBkg == 5 || whichBkg == 6 || whichBkg == 7)  
       factory->AddBackgroundTree( background3b, backgroundWeight );
-    if (whichBkg == 5 || whichBkg == 6)  
+    if (whichBkg == 5 || whichBkg == 6 || whichBkg == 7)  
       factory->AddBackgroundTree( background4b, backgroundWeight );
-    if (whichBkg == 6)  
+    if (whichBkg == 6 || whichBkg == 7)  
       factory->AddBackgroundTree( background5b, backgroundWeight );
+    if  (whichBkg == 7)
+      factory->AddBackgroundTree( background6b, backgroundWeight );
   }
   
   //---- global weight
@@ -788,12 +917,11 @@ void TrainApr2017( int whichBkg = 1,
 
   // METFilter_MC  =  METFilter_Common + '*' + '(('+METFilter_MCver+'*'+METFilter_MCOld+')||(!'+METFilter_MCver+'*'+METFilter_MCNew+'))'
 
-  factory->SetSignalWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
+  if (applySignalWeights == "true")
+    factory->SetSignalWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
+  else if (applySignalWeights == "false")
+    factory->SetSignalWeightExpression("SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
   
-  // if (massPointA == "0" && massPointB == "0"){
-  //   factory->SetSignalWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
-  // }
-
   factory->SetBackgroundWeightExpression("baseW*SFweight2l*GenLepMatch2l*LepCut2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*LepSF2l__ele_cut_WP_Tight80X__mu_cut_Tight80x*METFilter_MC");
 
   // --- end of tree registration 
@@ -863,7 +991,8 @@ void TrainApr2017( int whichBkg = 1,
   //                                         "NSigTrain=3000:NBkgTrain=3000:NSigTest=3000:NBkgTest=3000:SplitMode=Random:!V" );
   //  factory->PrepareTrainingAndTestTree( mycuts, mycutb,  "nTrain_Signal=0:nTrain_Background=0:SplitMode=Random:NormMode=NumEvents:!V" );
   factory->PrepareTrainingAndTestTree( mycuts, mycuts, "SplitMode=Random:NormMode=NumEvents:!V");
-  //  factory->PrepareTrainingAndTestTree(mycuts,"nTrain_Signal=4000:nTrain_Background=4000:nTest_Signal=4000:nTest_Background=4000:SplitMode=Random::NormMode=NumEvents:!V");
+  // if (applySignalWeights == "false")
+  //   factory->PrepareTrainingAndTestTree(mycuts,"nTrain_Signal=6000:nTrain_Background=0:nTest_Signal=6000:nTest_Background=0:SplitMode=Random::NormMode=NumEvents:!V");
 
   // ---- Book MVA methods
   // Please lookup the various method configuration options in the corresponding cxx files, eg:
