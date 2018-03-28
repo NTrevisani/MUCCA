@@ -64,8 +64,8 @@ TString outputNameB = "";
 // e.g. root -l -q 'TrainApr2017.cxx(6,1,"0","em","BDT7","0","0","true","true")'
 // e.g. root -l -q 'TrainApr2017.cxx(6,2,"0","em","BDT7","0","0","true","true")'
 
-// e.g. root -l -q 'TrainApr2017.cxx(6,1,"0","em","BDT7","0","0","true","false")'
-// e.g. root -l -q 'TrainApr2017.cxx(6,2,"0","em","BDT7","0","0","true","false")'
+// e.g. root -l -q 'TrainApr2017.cxx(7,1,"0","em","BDT7","0","0","true","true")'
+// e.g. root -l -q 'TrainApr2017.cxx(7,2,"0","em","BDT7","0","0","true","true")'
 
 void TrainApr2017( int whichBkg = 1, 
 		   int whichSig = 1, 
@@ -393,39 +393,39 @@ void TrainApr2017( int whichBkg = 1,
     // Input Folder for Different Flavour Channel
     TString inputFolderDF = "";
     inputFolderDF = upperFolderDF + "lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__LepTrgFix__formulasMC__wwSel__monohSel/";
-
+    
     // Input Folder for Same Flavour Channel
     TString inputFolderSF = "";
     inputFolderSF = upperFolderSF + "lepSel__MCWeights__bSFLpTEffMulti__cleanTauMC__l2loose__hadd__l2tightOR__LepTrgFix__formulasMC__sfSel__monohSel/";
-
-  TString fname;
+    
+    TString fname;
   
-  ////////////
-  // Signal //
-  ////////////
-
-  // Signal files and trees declaration
-  TFile *inputSA;
-  TTree *signalA;
-
-  TFile *inputSB;
-  TTree *signalB;
-
-  TFile *allInputsA[9];
-  TTree *allSignalsA[9];
-
-  TFile *allInputsB[9];
-  TTree *allSignalsB[9];
-
-  TFile *inputsAllA;
-  TTree *signalsAllA;
-
-  TFile *inputsAllB;
-  TTree *signalsAllB;
-
-
+    ////////////
+    // Signal //
+    ////////////
+    
+    // Signal files and trees declaration
+    TFile *inputSA;
+    TTree *signalA;
+    
+    TFile *inputSB;
+    TTree *signalB;
+    
+    TFile *allInputsA[9];
+    TTree *allSignalsA[9];
+    
+    TFile *allInputsB[9];
+    TTree *allSignalsB[9];
+    
+    TFile *inputsAllA;
+    TTree *signalsAllA;
+    
+    TFile *inputsAllB;
+    TTree *signalsAllB;
+    
+    
   // 2HDM //
-
+    
   if (whichSig == 1){
 
     if (massPointA == "0" && massPointB == "0"){
